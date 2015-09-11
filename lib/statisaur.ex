@@ -1,0 +1,2 @@
+defmodule Statisaur do
+end
