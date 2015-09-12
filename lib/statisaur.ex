@@ -13,7 +13,7 @@ defmodule Statisaur do
   1.0
 
   """
-  def sum(list) when is_list(list), do: Enum.sum(Enum.to_list(list))
+  def sum(list) when is_list(list), do: Enum.sum(list)
 
   @doc """
   Calculate the mean from a list of numbers
