@@ -7,10 +7,10 @@ Elixir library for doing univariate statistics and certain analyses.
 [![hex.pm downloads](https://img.shields.io/hexpm/dt/graphmath.svg)](https://hex.pm/packages/graphmath)
 [![Coverage Status](https://coveralls.io/repos/crertel/graphmath/badge.svg?branch=master)](https://coveralls.io/r/crertel/graphmath?branch=master)
 
-What is statissaur?
+What is statisaur?
 ===================
 
-Statisaurh is a library for handling common univariate and descriptive statistics, as well as certain analyses, regressions, and tests.
+Statisaur is a library for handling common univariate and descriptive statistics, as well as certain analyses, regressions, and tests.
 
 Features
 ========
