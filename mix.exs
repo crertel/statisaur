@@ -13,8 +13,7 @@ defmodule Statisaur.Mixfile do
   # Configuration for the OTP application
   #
   # Type `mix help compile.app` for more information
-  def application do: []
-  end
+  def application, do: []
 
   # Dependencies can be Hex packages:
   #
