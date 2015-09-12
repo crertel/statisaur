@@ -1,4 +1,12 @@
 defmodule Statisaur do
+  @moduledoc """
+  Statisaur - Statistics functions
+  This module currently contains the functions for
+  summary statistics.
+  
+  """
+
+
   @doc """
   Calculate the mean from a list of numbers
 
