@@ -7,7 +7,7 @@ Elixir library for doing univariate statistics and certain analyses.
 [![hex.pm downloads](https://img.shields.io/hexpm/dt/statisaur.svg)](https://hex.pm/packages/statisaur)
 [![Coverage Status](https://coveralls.io/repos/hawthornehaus/statisaur/badge.svg?branch=master)](https://coveralls.io/r/hawthornehaus/statisaur?branch=master)
 
-What is statissaur?
+What is statisaur?
 ===================
 
 Statisaur is a library for handling common univariate and descriptive statistics, as well as certain analyses, regressions, and tests.
