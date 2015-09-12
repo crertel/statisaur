@@ -1,16 +1,16 @@
 # statisaur
 Elixir library for doing univariate statistics and certain analyses.
 
-[![Build Status](https://api.travis-ci.org/repositories/crertel/graphmath.svg)](https://travis-ci.org/crertel/graphmath)
-[![Inline docs](http://inch-ci.org/github/crertel/graphmath.svg)](http://inch-ci.org/github/crertel/graphmath)
-[![hex.pm version](https://img.shields.io/hexpm/v/graphmath.svg)](https://hex.pm/packages/graphmath)
-[![hex.pm downloads](https://img.shields.io/hexpm/dt/graphmath.svg)](https://hex.pm/packages/graphmath)
-[![Coverage Status](https://coveralls.io/repos/crertel/graphmath/badge.svg?branch=master)](https://coveralls.io/r/crertel/graphmath?branch=master)
+[![Build Status](https://api.travis-ci.org/repositories/hawthornehaus/statisaur.svg)](https://travis-ci.org/hawthornehaus/statisaur)
+[![Inline docs](http://inch-ci.org/github/hawthornehaus/statisaur.svg)](http://inch-ci.org/github/hawthornehaus/statisaur)
+[![hex.pm version](https://img.shields.io/hexpm/v/statisaur.svg)](https://hex.pm/packages/statisaur)
+[![hex.pm downloads](https://img.shields.io/hexpm/dt/statisaur.svg)](https://hex.pm/packages/statisaur)
+[![Coverage Status](https://coveralls.io/repos/hawthornehaus/statisaur/badge.svg?branch=master)](https://coveralls.io/r/hawthornehaus/statisaur?branch=master)
 
 What is statissaur?
 ===================
 
-Statisaurh is a library for handling common univariate and descriptive statistics, as well as certain analyses, regressions, and tests.
+Statisaur is a library for handling common univariate and descriptive statistics, as well as certain analyses, regressions, and tests.
 
 Features
 ========
