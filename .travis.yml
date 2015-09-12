@@ -3,7 +3,7 @@ otp_release:
   - 17.1
 before_script:
   - export PATH=`pwd`/elixir/bin:$PATH
-  - mix hex.local --force
+#  - mix hex.local --force
   - mix deps.get --only test
 script: mix test
 after_script:
