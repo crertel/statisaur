@@ -2,30 +2,22 @@ defmodule Statisaur.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :statisaur,
+    [ app: :statisaur,
       version: "0.0.1",
-      elixir: "~> 1.1-beta",
+      elixir: "~> 1.0",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps: deps]
+      package: package,
+      docs: &docs/0,
+      deps: deps,
+      test_coverage: [tool: ExCoveralls],
+      description: description ]
   end
 
   # Configuration for the OTP application
   #
   # Type `mix help compile.app` for more information
-  def application do: []
-  end
-
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type `mix help deps` for more examples and options
-  defp deps do
+  def application do
     []
   end
 
@@ -35,5 +27,28 @@ defmodule Statisaur.Mixfile do
       licenses: ["Public Domain (unlicense)"],
       links: %{"GitHub" => "https://github.com/hawthornehaus/statisaur"}
     ]
+  end
+  
+  defp description do
+    """
+    Statisaur is a simple library for doing univariate and descriptive statistics.
+
+    It also does various tests, regressions, and models.
+    """
+  end
+
+  defp deps do
+    [
+        {:earmark, "~> 0.1", only: :dev },
+        {:ex_doc, "~> 0.6", only: :dev},
+        {:excoveralls, "~> 0.3", only: :dev},
+        {:inch_ex, "~> 0.2",  only: :docs}
+    ]
+  end
+
+  defp docs do
+    {ref, 0} = System.cmd("git", ["rev-parse", "--verify", "--quiet", "HEAD"])
+    [ source_ref: ref,
+     main: "overview"]
   end
 end
