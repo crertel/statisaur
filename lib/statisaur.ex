@@ -1,4 +1,25 @@
 defmodule Statisaur do
+  @doc """
+  Test if a collection is enumerable
+
+  ### Examples
+
+  iex>Statisaur.is_enum(1..8)
+  true
+  iex>Statisaur.is_enum([1,2,3])
+  true
+  iex>Statisaur.is_enum({1,2,3})
+  false
+
+  """
+  def is_enum(item) do
+    try do
+      Enum.sum(item)
+      what_happened = true
+    rescue
+      _ -> what_happened = false
+    end
+  end
 
   @doc """
   Calculate the mean from a list of numbers
@@ -14,12 +35,10 @@ defmodule Statisaur do
   1.0
 
   """
-  def sum(list) when is_list(list), do: Enum.sum(list)
+  def sum(list) when is_list(list), do: Enum.sum(Enum.to_list(list))
 
   @doc """
   Calculate the mean from a list of numbers
-
-  If list, coerce to list
 
   ### Examples
   iex>Statisaur.mean([1,3,5,7,9])
