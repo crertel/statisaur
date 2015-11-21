@@ -8,7 +8,7 @@ defmodule Statisaur do
 
 
   @doc """
-  Calculate the mean from a list of numbers
+  Calculate the sum from a list of numbers
 
   If list, coerce to list
 
