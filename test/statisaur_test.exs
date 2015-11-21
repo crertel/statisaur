@@ -24,6 +24,14 @@ defmodule StatisaurTest do
     assert 5000.5 == Statisaur.mean(@large)
   end
 
+  test "median([0.1,0.2,0.6) returns 0.2" do
+    assert 0.2 == Statisaur.median([0.1,0.2,0.6])
+  end
+
+  test "median([0.7,0.4,0.6,0.1]) returns 0.5" do
+    assert 0.5 == Statisaur.median([0.7,0.4,0.6,0.1])
+  end
+
   test "var([0.1,0.2,0.6]) returns 0.06999999999999999" do
     assert 0.06999999999999999 == Statisaur.var([0.1,0.2,0.6])
   end
@@ -33,5 +41,3 @@ defmodule StatisaurTest do
   end
 
 end
-
-

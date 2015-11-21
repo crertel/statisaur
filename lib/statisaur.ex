@@ -5,12 +5,9 @@ defmodule Statisaur do
   summary statistics.
   
   """
-
-
+  
   @doc """
   Calculate the sum from a list of numbers
-
-  If list, coerce to list
 
   ### Examples
   iex>Statisaur.sum([1,3,5,7,9])
@@ -34,6 +31,28 @@ defmodule Statisaur do
 
   """
   def mean(list) when is_list(list), do: sum(list)/length(list)
+
+  @doc """
+  Calculate the median from a list of numbers
+
+  ### Examples
+  iex>Statisaur.median([1,3,5,7,9])
+  5
+  iex>Statisaur.median([1,1])
+  1.0
+  iex>Statisaur.median([0.1,0.4,0.6,0.9])
+  0.5
+
+  """
+  def median(list) when is_list(list) do
+    if rem(length(list),2) == 0 do
+      a = Enum.at(Enum.sort(list), round(length(list)/2))
+      b = Enum.at(Enum.sort(list), round((length(list)/2) - 1))
+      mean([a,b])
+    else
+      Enum.at(Enum.sort(list), round(Float.floor(length(list)/2)))
+    end
+  end
 
   @doc """
   Calculate the variance from a list of numbers
