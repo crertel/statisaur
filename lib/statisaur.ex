@@ -55,6 +55,21 @@ defmodule Statisaur do
   end
 
   @doc """
+  Calculate most commonly occurring number from a list of numbers
+
+  ### Examples
+  iex>Statisaur.mode([1,1,2,3])
+  1
+  iex>Statisaur.mode([1.0,2.0,2.0,3.0])
+  2.0
+
+  """
+  def mode(list) when is_list(list) do
+    list1 = Enum.zip(Enum.slice(list, 1..Enum.count(list)),Enum.slice(list, 0..(Enum.count(list)-2)))
+    diff1 = Enum.map(list1, fn {x, y} -> {x-y} end)
+  end
+
+  @doc """
   Calculate the variance from a list of numbers
 
   ### Examples
