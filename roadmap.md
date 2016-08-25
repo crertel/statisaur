@@ -5,9 +5,9 @@
 * variance
 * coefficient of variation
 * kurtosis, skewness
-* Wilcoxon signed rank test
 
 # Distributions
+
 
 * t distribution
 * F distribution
@@ -15,6 +15,7 @@
 
 # Bivariate statistics
 
+* t test
 * pearsons correlation
 * linear regression
 
@@ -22,3 +23,5 @@
 
 * spearmans correlation
 * chi square test
+* Wilcoxon rank-sum test / Mann-Whitney U test
+* Kruskal Wallis test
