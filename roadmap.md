@@ -4,11 +4,12 @@
 
 - [ ] min
 - [ ] max
-- [ ] mean
-- [ ] median
-- [ ] mode
-- [ ] standard dev
+- [x] mean
+- [x] median
+- [x] mode
+- [x] standard dev
 - [ ] variance
+- [x] frequency
 - [ ] coefficient of variation
 - [ ] kurtosis
 - [ ] skewness
