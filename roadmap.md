@@ -8,7 +8,7 @@
 - [x] median
 - [x] mode
 - [x] standard dev
-- [ ] variance
+- [x] variance
 - [x] frequency
 - [ ] coefficient of variation
 - [ ] kurtosis
