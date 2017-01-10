@@ -45,12 +45,15 @@ defmodule Statisaur do
 
   """
   def median(list) when is_list(list) do
-    if rem(length(list),2) == 0 do
-      a = Enum.at(Enum.sort(list), round(length(list)/2))
-      b = Enum.at(Enum.sort(list), round((length(list)/2) - 1))
-      mean([a,b])
-    else
-      Enum.at(Enum.sort(list), round(Float.floor(length(list)/2)))
+    n = length(list)
+    sorted = list |> Enum.sort
+    pivot = round(n/2)
+
+    case rem(n,2)  do
+      0 -> a = sorted |> Enum.at(pivot) 
+           b = sorted |> Enum.at(pivot - 1) 
+           (a+b)/2 # median for an even-sized set is the mean of the middle numbers
+      _ -> sorted |> Enum.at(round(Float.floor(n/2))) # this seems weird, but Float floor yields float not int :()
     end
   end
 
