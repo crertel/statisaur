@@ -58,6 +58,38 @@ defmodule Statisaur do
   end
 
   @doc """
+  Calculate the frequency counts of distinct elements.
+
+  ### Examaples
+  iex>Statisaur.frequencies([1])
+  [{1,1}]
+  iex>Statisaur.frequencies([1,2,2,3])
+  [{1,1},{2,2},{3,1}]
+  """
+  def frequencies(list) when is_list(list) do
+    sorted = list |> Enum.sort
+    vals = sorted |> Enum.uniq
+    freqs = vals |> Enum.map( fn(v) -> Enum.count(sorted, fn(x)-> x == v end) end)
+    Enum.zip(vals,freqs)
+  end
+
+  @doc """
+  Calculate most commonly occurring number from a list of numbers
+
+  ### Examples
+  iex>Statisaur.mode([1,1,2,3])
+  [1]
+  iex>Statisaur.mode([1.0,2.0,2.0,3.0,3.0])
+  [2.0,3.0]
+  """
+  def mode(list) when is_list(list) and length(list) > 0 do
+    freqs = frequencies(list)
+    sorted_freqs = freqs |> Enum.sort_by(fn({_,f})->f end, &>=/2)
+    {_, mode_guess} = sorted_freqs |> Enum.at(0)
+    sorted_freqs |> Enum.filter( fn({_,f})-> f >= mode_guess end) |> Enum.map( fn({v,_})->v end)
+  end
+
+  @doc """
   Calculate the variance from a list of numbers
 
   ### Examples
