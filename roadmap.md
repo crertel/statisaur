@@ -1,25 +1,31 @@
-# Univariate, or descriptive statistics
+# Statisaur Roadmap
 
-* mean, median, mode
-* std dev
+## Univariate, or descriptive statistics
+
+* min
+* max
+* mean
+* median
+* mode
+* standard dev
 * variance
 * coefficient of variation
-* kurtosis, skewness
+* kurtosis
+* skewness
 
-# Distributions
-
+## Distributions
 
 * t distribution
 * F distribution
 * X distribution
 
-# Bivariate statistics
+## Bivariate statistics
 
 * t test
 * pearsons correlation
 * linear regression
 
-# Nonparametric statistics
+## Nonparametric statistics
 
 * spearmans correlation
 * chi square test
