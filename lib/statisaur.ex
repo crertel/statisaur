@@ -45,12 +45,13 @@ defmodule Statisaur do
 
   """
   def median(list) when is_list(list) do
-    if rem(length(list),2) == 0 do
-      a = Enum.at(Enum.sort(list), round(length(list)/2))
-      b = Enum.at(Enum.sort(list), round((length(list)/2) - 1))
+    n = length(list)
+    if rem(n, 2) == 0 do
+      a = list |> Enum.sort() |> Enum.at(round(n/2))
+      b = list |> Enum.sort() |> Enum.at(round(n/2) - 1)
       mean([a,b])
     else
-      Enum.at(Enum.sort(list), round(Float.floor(length(list)/2)))
+      list |> Enum.sort() |> Enum.at(round(Float.floor(n/2))
     end
   end
 
