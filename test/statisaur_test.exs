@@ -48,4 +48,12 @@ defmodule StatisaurTest do
     assert 8334166.666666667 == Statisaur.variance(@large)
   end
 
+  test "stddev([0.1,0.2,0.6]) returns 0.2645751" do
+    assert 0.2645751 == Statisaur.stddev([0.1,0.2,0.6])
+  end
+
+  test "stddev(@large) returns 2886.896" do
+    assert 2886.896 == Statisaur.stddev(@large)
+  end
+
 end
