@@ -3,9 +3,33 @@ defmodule Statisaur do
   Statisaur - Statistics functions
   This module currently contains the functions for
   summary statistics.
-  
   """
   
+  @doc """
+  Calculate the smallest value from a list of numbers.
+
+  ### Examples
+  iex>Statisaur.min([1,2,3])
+  1
+  iex>Statisaur.min([5,0.5,2,3])
+  0.5
+  """
+  def min(list) when is_list(list) and length(list) > 1 do
+    Enum.min(list)
+  end
+
+  @doc """
+  Calculate the largest value from a list of numbers.
+  ### Examples
+  iex>Statisaur.max([1,2,3])
+  3
+  iex>Statisaur.max([5.1,0.5,2,3])
+  5.1
+  """
+  def max(list) when is_list(list) and length(list) > 1 do
+    Enum.max(list)
+  end
+
   @doc """
   Calculate the sum from a list of numbers
 

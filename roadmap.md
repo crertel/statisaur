@@ -2,8 +2,8 @@
 
 ## Univariate, or descriptive statistics
 
-- [ ] min
-- [ ] max
+- [x] min
+- [x] max
 - [x] mean
 - [x] median
 - [x] mode
