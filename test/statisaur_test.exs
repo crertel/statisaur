@@ -3,6 +3,7 @@ defmodule StatisaurTest do
   doctest Statisaur
 
   @large Enum.to_list(1..10000)
+  @eps 1.0e-4
 
   test "min([1,1,2,3,5,8]) returns 1" do
     assert 1 == Statisaur.min([1,1,2,3,5,8])
@@ -49,11 +50,11 @@ defmodule StatisaurTest do
   end
 
   test "stddev([0.1,0.2,0.6]) returns 0.2645751" do
-    assert 0.2645751 == Statisaur.stddev([0.1,0.2,0.6])
+    assert_in_delta( 0.2645751, Statisaur.stddev([0.1,0.2,0.6]), @eps )
   end
 
-  test "stddev(@large) returns 2886.896" do
-    assert 2886.896 == Statisaur.stddev(@large)
+  test "stddev(@large) returns 2886.895679" do
+    assert_in_delta(2886.895679, Statisaur.stddev(@large), @eps )
   end
 
 end

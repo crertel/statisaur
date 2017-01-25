@@ -129,4 +129,17 @@ defmodule Statisaur do
     df = length(list) - 1
     diffmeans/df
   end
+
+  @doc """
+  Calculates the standard deviation from a list of numbers.
+
+  ### Examples
+  iex>Statisaur.stddev([1,3,5,7,9]) |> Float.round(6)
+  3.162278
+  iex>Statisaur.stddev([0.1,0.2,0.6]) |> Float.round(6)
+  0.264575
+  """
+  def stddev(list) when is_list(list) and length(list) > 1 do
+    list |> variance |> :math.sqrt
+  end
 end
