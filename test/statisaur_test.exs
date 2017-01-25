@@ -4,6 +4,14 @@ defmodule StatisaurTest do
 
   @large Enum.to_list(1..10000)
 
+  test "min([1,1,2,3,5,8]) returns 1" do
+    assert 1 == Statisaur.min([1,1,2,3,5,8])
+  end
+
+  test "max([1,1,2,3,5,8]) returns 8" do
+    assert 8 == Statisaur.max([1,1,2,3,5,8])
+  end
+
   test "sum([1,3,5,7,9])returns 25" do
     assert 25 == Statisaur.sum([1,3,5,7,9])
   end
