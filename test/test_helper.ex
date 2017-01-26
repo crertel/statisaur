@@ -26,16 +26,18 @@ defmodule Statisaur.Testhelper do
   [[1, 2], [4, 3], [1, 3]]
 
   """
-  def pluck_all(list, ncol, result) when ncol < 1 do
-    result = [result|pluck(list, ncol)]
+  def pluck_all(list, ncol, result) when ncol <= 1 do
+    result = [pluck(list, ncol - 1)|result]
   end
 
   def pluck_all(list, ncol) do 
+    ncol = ncol - 1
     result = pluck(list, ncol)
+    pluck_all(list, ncol, result)
   end
 
   def pluck_all(list, ncol, result) do
-    result = [result|pluck(list, ncol)]
+    result = [pluck(list, ncol)|result]
     pluck_all(list, ncol - 1, result)
   end
 
