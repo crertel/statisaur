@@ -13,8 +13,8 @@ defmodule Statisaur.TestHelper do
   iex>Statisaur.TestHelper.pluck([[1, 4]], 1)
   [1]
   """
-  def pluck(list, n) when is_integer(n) and length(list) >= n do
-    Enum.map(list, &Enum.at(&1, n-1))
+  def pluck(list, n) do
+    Enum.map(list, &Enum.at(&1, n - 1))
   end
 
   @doc """
@@ -28,12 +28,25 @@ defmodule Statisaur.TestHelper do
     result
   end
 
+  @doc """
+  Pluck all columns
+
+  ### Examples
+  iex>Statisaur.TestHelper.pluck_all([[1, 4, 3], [2, 3, 1]], 3, [])
+  [[1, 2], [4, 3], [3, 1]]
+  """
   def pluck_all(list, ncol, result) do
-    result = [pluck(list, ncol - 1)|result]
+    result = [pluck(list, ncol)|result]
     pluck_all(list, ncol - 1, result)
   end
 
+  @doc """
+  Pluck all columns
 
+  ### Examples
+  iex>Statisaur.TestHelper.pluck_contents([[1, 4, 3], [2, 3, 1]])
+  [[1, 2], [4, 3], [3, 1]]
+  """
   def pluck_contents(list) when is_list(list) do
     ncol = length(hd(list))
     pluck_all(list, ncol, [])
