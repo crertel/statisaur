@@ -10,9 +10,10 @@
 - [x] standard dev
 - [x] variance
 - [x] frequency
+- [x] kurtosis
+- [x] skewness
 - [ ] coefficient of variation
-- [ ] kurtosis
-- [ ] skewness
+
 
 ## Distributions
 

@@ -114,6 +114,17 @@ defmodule Statisaur do
   end
 
   @doc """
+  Create an element-wise kth-power of a list compared to a reference value.
+
+  ### Examples
+  iex>Statisaur.powered_error( [1,2,3], 2, 1)
+  [-1.0,0.0,1.0]
+  """
+  def powered_error( list, reference, k) when is_list(list) and length(list) > 1 do
+    list |> Enum.map( fn(x) -> :math.pow( x - reference, k) end )
+  end
+
+  @doc """
   Calculate the variance from a list of numbers
 
   ### Examples
@@ -124,8 +135,8 @@ defmodule Statisaur do
 
   """
   def variance(list) when is_list(list) and length(list) > 1 do
-    mu = mean(list)
-    diffmeans = list |> Enum.map(fn x -> (mu - x) * (mu - x) end) |> Enum.sum
+    mu = mean(list)    
+    diffmeans = list |> powered_error( mu, 2 ) |> Enum.sum
     df = length(list) - 1
     diffmeans/df
   end
@@ -141,5 +152,62 @@ defmodule Statisaur do
   """
   def stddev(list) when is_list(list) and length(list) > 1 do
     list |> variance |> :math.sqrt
+  end
+
+  @doc """
+  Calculate the kth moment with respect to the origin of a list of numbers.
+
+  ###Examples
+  iex>Statisaur.raw_moment([1,2,3,4],1)
+  2.5
+  iex>Statisaur.raw_moment([1,2,3,4],2)
+  7.5
+  iex>Statisaur.raw_moment([1,2,3,4],3)
+  25.0
+  iex>Statisaur.raw_moment([1,2,3,4],4)
+  88.5
+  """
+  def raw_moment(list, k) when is_list(list) and length(list) > 1 do
+    count = length(list)  
+    (list |> Enum.map( fn(x) -> :math.pow( x, k) end ) |> Enum.sum) / count
+  end
+
+  @doc """
+  Calculate the kth central moment of a list of numbers.
+
+  ###Examples
+  iex>Statisaur.central_moment([1,2,3,4],1)
+  0.0
+  iex>Statisaur.central_moment([1,2,3,4],2)
+  1.25
+  iex>Statisaur.central_moment([1,2,3,4],3)
+  0.0
+  iex>Statisaur.central_moment([1,2,3,4],4) |> Float.round(4)
+  2.5625 
+  """
+  def central_moment(list, k) when is_list(list) and length(list) > 1 do
+    count = length(list)
+    mu = mean(list)
+    (list |> powered_error(mu, k) |> Enum.sum) / count
+  end
+
+  @doc """
+  Calculate the kth standardized moment of a list of numbers. See [here](https://en.wikipedia.org/wiki/Standardized_moment) for definition.
+
+  ###Examples
+  iex>Statisaur.standardized_moment([1,2,3,4],1)
+  0.0
+  iex>Statisaur.standardized_moment([1,2,3,4],2)
+  1.0
+  iex>Statisaur.standardized_moment([1,2,3,4],3)
+  0.0
+  iex>Statisaur.standardized_moment([1,2,3,4],4)
+  1.64
+  """
+  def standardized_moment(list, k) when is_list(list) and length(list) > 1 do            
+    m1 = raw_moment(list,1)
+    num = (powered_error(list, m1, k) |> Enum.sum) / length(list)
+    denom = :math.pow( (powered_error(list, m1, 2) |> Enum.sum)/length(list), k/2)
+    num/denom
   end
 end
