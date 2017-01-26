@@ -2,17 +2,18 @@
 
 ## Univariate, or descriptive statistics
 
-- [ ] min
-- [ ] max
+- [x] min
+- [x] max
 - [x] mean
 - [x] median
 - [x] mode
 - [x] standard dev
 - [x] variance
 - [x] frequency
+- [x] kurtosis
+- [x] skewness
 - [ ] coefficient of variation
-- [ ] kurtosis
-- [ ] skewness
+
 
 ## Distributions
 
