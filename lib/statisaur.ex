@@ -215,7 +215,7 @@ defmodule Statisaur do
   Calculates the skewness (3rd standardized moment) of a list of numbers.
 
   ###Examples
-  iex>Statisaur.standardized_moment([1,2,3,4],3)
+  iex>Statisaur.skewness([1,2,3,4])
   0.0
   """
   def skewness(list) when is_list(list) and length(list) > 1  do    
@@ -226,7 +226,7 @@ defmodule Statisaur do
   Calculates the kertosis (4th standardized moment) of a list of numbers.
 
   ###Examples
-  iex>Statisaur.standardized_moment([1,2,3,4],4)
+  iex>Statisaur.kertosis([1,2,3,4])
   1.64
   """
   def kertosis(list) when is_list(list) and length(list) > 1  do    
