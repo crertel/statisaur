@@ -1,6 +1,7 @@
 defmodule StatisaurTest do
   use ExUnit.Case
   doctest Statisaur
+  doctest Statisaur.TestHelper
 
   @large Enum.to_list(1..10000)
 
