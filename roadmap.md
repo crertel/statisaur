@@ -12,7 +12,7 @@
 - [x] frequency
 - [x] kurtosis
 - [x] skewness
-- [ ] coefficient of variation
+- [x] coefficient of variation
 
 
 ## Distributions
