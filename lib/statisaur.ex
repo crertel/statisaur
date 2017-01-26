@@ -210,4 +210,37 @@ defmodule Statisaur do
     denom = :math.pow( (powered_error(list, m1, 2) |> Enum.sum)/length(list), k/2)
     num/denom
   end
+
+  @doc """
+  Calculates the skewness (3rd standardized moment) of a list of numbers.
+
+  ###Examples
+  iex>Statisaur.skewness([1,2,3,4])
+  0.0
+  """
+  def skewness(list) when is_list(list) and length(list) > 1  do    
+    standardized_moment(list,3)
+  end
+
+  @doc """
+  Calculates the kertosis (4th standardized moment) of a list of numbers.
+
+  ###Examples
+  iex>Statisaur.kertosis([1,2,3,4])
+  1.64
+  """
+  def kertosis(list) when is_list(list) and length(list) > 1  do    
+    standardized_moment(list,4)
+  end
+
+  @doc """
+  Calculates the coefficient of variation for a list of numbers.
+
+  ###Examples
+  iex>Statisaur.coefficient_of_variation([1,2,3,4]) |> Float.round(4)
+  0.5164
+  """
+  def coefficient_of_variation(list) when is_list(list) and length(list) > 1 do
+    stddev(list) / mean(list)
+  end
 end
