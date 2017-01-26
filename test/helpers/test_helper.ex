@@ -18,10 +18,10 @@ defmodule Statisaur.TestHelper do
   end
 
   @doc """
-  Pluck all columns
+  Pluck all columns -- base case
 
   ### Examples
-  iex>Statisaur.TestHelper.pluck_all([[1, 4, 3], [2, 3, 1]])
+  iex>Statisaur.TestHelper.pluck_all([[1, 4, 3], [2, 3, 1]], 0, [[1, 2], [4, 3], [1, 3]])
   [[1, 2], [4, 3], [1, 3]]
   """
   def pluck_all(list, ncol, result) when ncol < 1 do
@@ -29,7 +29,7 @@ defmodule Statisaur.TestHelper do
   end
 
   @doc """
-  Pluck all columns
+  Pluck all columns -- recursive case
 
   ### Examples
   iex>Statisaur.TestHelper.pluck_all([[1, 4, 3], [2, 3, 1]], 3, [])
