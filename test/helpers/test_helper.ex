@@ -66,6 +66,7 @@ defmodule Statisaur.TestHelper do
     {:ok, contents} = File.read(file_path)
     [names, contents] = contents |>
     String.split("\n") |>
+    Enum.filter( fn(x)-> (String.trim(x) |> String.length()) > 0 end ) |>
     Enum.map(&String.split(&1, ",")) |> 
     pluck_contents() |>
     Enum.map(fn(x) -> [hd(x), tl(x)] end)
