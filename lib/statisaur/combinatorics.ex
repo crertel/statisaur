@@ -19,14 +19,22 @@ defmodule Statisaur.Combinatorics do
 
       iex(2)> Statisaur.Combinatorics.factorial(0)
       1
+
+    Statisaur will raise an error in the case of negative integers.
+      iex(3)> Statisaur.Combinatorics.factorial(-5)
+      ** (ArgumentError) argument must be positive integer
   """
   @spec factorial(integer) :: integer
   def factorial(0) do
     1
   end
 
-  def factorial(n) when is_integer(n) do
+  def factorial(n) when is_integer(n) and n > 0  do
     Enum.reduce((1..n), 1, fn(x, acc) -> x * acc end)
+  end
+
+  def factorial(_term) do
+    raise ArgumentError, "argument must be positive integer"
   end
 
 end

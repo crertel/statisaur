@@ -11,4 +11,8 @@ defmodule CombinatoricsTest do
     assert Combinatorics.factorial(0) == 1 
   end
 
+  test "factorial raises an error with negative integers" do
+    assert_raise ArgumentError, fn -> Combinatorics.factorial(-10) end
+  end
+
 end
