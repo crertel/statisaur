@@ -7,10 +7,15 @@ defmodule Statisaur.Combinatorics do
 
   The factorial of a non-negative integer n, is the product of all positive integers less than or equal to n.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   The value of factorial(0) is 1, according to the convention for an empty product.
 =======
 >>>>>>> b537b8c... Implement factorial function
+=======
+
+  The value of factorial(0) is 1, according to the convention for an empty product.
+>>>>>>> 6d88c3c... Factorial of 0 returns 1
   
   ### Example
     The factorial of 5 is (5 * 4 * 3 * 2 * 1), or 120.
@@ -18,11 +23,15 @@ defmodule Statisaur.Combinatorics do
       iex(1)> Statisaur.Combinatorics.factorial(5)
       120
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6d88c3c... Factorial of 0 returns 1
 
     The factorial of 0 is 1, according to the convention for an empty product.
 
       iex(2)> Statisaur.Combinatorics.factorial(0)
       1
+<<<<<<< HEAD
 
     Statisaur will raise an error in the case of negative integers.
       iex(3)> Statisaur.Combinatorics.factorial(-5)
@@ -69,7 +78,14 @@ defmodule Statisaur.Combinatorics do
   end
 
 =======
+=======
+>>>>>>> 6d88c3c... Factorial of 0 returns 1
   """
+  @spec factorial(integer) :: integer
+  def factorial(0) do
+    1
+  end
+
   def factorial(n) when is_integer(n) do
     Enum.reduce((1..n), 1, fn(x, acc) -> x * acc end)
   end

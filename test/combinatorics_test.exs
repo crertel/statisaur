@@ -34,4 +34,8 @@ defmodule CombinatoricsTest do
 =======
 >>>>>>> a7e084b... Add test case for factorial function happy path
 
+  test "factorial 0 returns 1" do
+    assert Combinatorics.factorial(0) == 1 
+  end
+
 end
