@@ -6,6 +6,7 @@ defmodule CombinatoricsTest do
   test "factorial 5 returns 120" do
     assert Combinatorics.factorial(5) == 120
   end
+<<<<<<< HEAD
 
   test "factorial 0 returns 1" do
     assert Combinatorics.factorial(0) == 1 
@@ -30,5 +31,7 @@ defmodule CombinatoricsTest do
   test "combinations raises an error with non-integer inputs" do
     assert_raise ArgumentError, fn -> Combinatorics.combinations("string", 5) end
   end
+=======
+>>>>>>> a7e084b... Add test case for factorial function happy path
 
 end
