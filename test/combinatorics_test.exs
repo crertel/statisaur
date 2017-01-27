@@ -7,4 +7,8 @@ defmodule CombinatoricsTest do
     assert Combinatorics.factorial(5) == 120
   end
 
+  test "factorial 0 returns 1" do
+    assert Combinatorics.factorial(0) == 1 
+  end
+
 end
