@@ -42,4 +42,20 @@ defmodule CombinatoricsTest do
     assert_raise ArgumentError, fn -> Combinatorics.factorial(-10) end
   end
 
+  test "combinations(4, 2) returns 6" do
+    assert Combinatorics.combinations(4, 2) == 6
+  end
+
+  test "combinations(15, 8) returns 6435" do
+    assert Combinatorics.combinations(15, 8) == 6435
+  end
+
+  test "combinations raises an error with negative integers" do
+    assert_raise ArgumentError, fn -> Combinatorics.combinations(10, -5) end
+  end
+
+  test "combinations raises an error with non-integer inputs" do
+    assert_raise ArgumentError, fn -> Combinatorics.combinations("string", 5) end
+  end
+
 end
