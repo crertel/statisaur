@@ -37,4 +37,31 @@ defmodule Statisaur.Combinatorics do
     raise ArgumentError, "argument must be positive integer"
   end
 
+  @doc ~S"""
+  Finds the binomial coefficient of two integers.
+  The binomial coefficient (n; k) is the number of ways of picking k unordered outcomes from n \
+  possibilities, also known as a combination or combinatorial number.
+
+  ### Examples
+    The number of outcomes of two from five possibilities is ten.
+      iex(1)> Statisaur.Combinatorics.combinations(5, 2)
+      10
+
+    The number of outcomes of eight from twenty possibilities is 125970.
+      iex(2)> Statisaur.Combinatorics.combinations(20, 8)
+      125970
+  """
+  @spec combinations(integer, integer) :: integer
+  def combinations(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
+    div(falling_factorial(n, k), factorial(k))
+  end
+
+  def combinations(_n, _k) do
+    raise ArgumentError, "arguments must be positive integers"
+  end
+
+  defp falling_factorial(n, k) do
+    Enum.reduce(n..(n-(k-1)), 1, fn(x, acc) -> x * acc end)
+  end
+
 end
