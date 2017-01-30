@@ -60,8 +60,58 @@ defmodule Statisaur.Combinatorics do
     raise ArgumentError, "arguments must be positive integers"
   end
 
-  defp falling_factorial(n, k) do
+  @doc ~S"""
+  The falling factorial, or falling sequential product, is defined as:
+  `x * (x - 1) * (x - 2) * ... (x - n - 1)`
+
+  ### Examples
+    The falling factorial of (5, 4) would be `5 * 4 * 3 * 2`
+      iex(1)> Statisaur.Combinatorics.falling_factorial(5, 4)
+      120
+
+    The falling factorial of (5, 3) would be `5 * 4 * 3`
+      iex(2)> Statisaur.Combinatorics.falling_factorial(5, 3)
+      60
+
+    The falling factorial of (5, 2) would be `5 * 4`
+      iex(3)> Statisaur.Combinatorics.falling_factorial(5, 2)
+      20
+
+    With a second argument of `1`, the return value is simply the first argument
+      iex(4)> Statisaur.Combinatorics.falling_factorial(5, 1)
+      5
+
+    Listing the second input as `0` returns 1
+      iex(5)> Statisaur.Combinatorics.falling_factorial(5, 0)
+      1
+
+    The return value is `0` when the second argument is larger than the first, and
+    both arguments are positive
+      iex(6)> Statisaur.Combinatorics.falling_factorial(5, 7)
+      0
+    
+    When the second argument is negative, the function returns positive values between 1 and 0
+      iex(7)> Statisaur.Combinatorics.falling_factorial(1, -2)
+      0.16666666666666666
+    
+    When the both arguments are negative, the function raises an ArithmaticError.       
+  """
+  @spec falling_factorial(integer, integer) :: integer | float
+  def falling_factorial(n, 0) when is_integer(n) do
+    1
+  end
+
+  def falling_factorial(n, k) when is_integer(n) and is_integer(k) and k < 0 do
+    m = abs(k)
+    1 / falling_factorial((n+m), m)
+  end
+
+  def falling_factorial(n, k) when is_integer(n) and is_integer(k) do
     Enum.reduce(n..(n-(k-1)), 1, fn(x, acc) -> x * acc end)
+  end
+
+  def falling_factorial(_n, _k) do
+    raise ArgumentError, "arguments must be integers"
   end
 
 end
