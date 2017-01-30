@@ -46,7 +46,7 @@ defmodule Statisaur.Mixfile do
     [
         {:earmark, "~> 0.1", only: :dev },
         {:ex_doc, "~> 0.6", only: :dev},
-        {:excoveralls, "~> 0.3", only: :dev},
+        {:excoveralls, "~> 0.6", only: :dev},
         {:inch_ex, "~> 0.2",  only: :docs}
     ]
   end
