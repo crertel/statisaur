@@ -64,6 +64,8 @@ defmodule Statisaur.Combinatorics do
   The falling factorial, or falling sequential product, is defined as:
   `x * (x - 1) * (x - 2) * ... (x - n - 1)`
 
+  Compare also to `rising_factorial/2`.
+
   ### Examples
     The falling factorial of (5, 4) would be `5 * 4 * 3 * 2`
       iex(1)> Statisaur.Combinatorics.falling_factorial(5, 4)
@@ -94,7 +96,7 @@ defmodule Statisaur.Combinatorics do
       iex(7)> Statisaur.Combinatorics.falling_factorial(1, -2)
       0.16666666666666666
     
-    When the both arguments are negative, the function raises an ArithmaticError.       
+    When the both arguments are negative, the function raises an ArithmeticError.       
   """
   @spec falling_factorial(integer, integer) :: integer | float
   def falling_factorial(n, 0) when is_integer(n) do
@@ -111,6 +113,41 @@ defmodule Statisaur.Combinatorics do
   end
 
   def falling_factorial(_n, _k) do
+    raise ArgumentError, "arguments must be integers"
+  end
+
+
+  @doc ~S"""
+  The rising factorial, also known as the 'rising sequential product' or 'Pochhammer polynomial',
+  is defined as: `x * (x + 1) * (x + 2) ... (x + n - 1)`
+
+  Compare also to `falling_factorial/2`.
+
+  ### Examples
+    `rising_factorial(5, 4)` is equivalent to `5 * (5 + 1) * (5 + 2) * (5 + 3)`
+      iex(1)> Statisaur.Combinatorics.rising_factorial(5, 4)
+      1680
+
+    The return value is always `1` when the second argument is `0`
+      iex(2)> Statisaur.Combinatorics.rising_factorial(5, 0)
+      1
+    
+    The function raises an `ArithmeticError` when the second argument is negative
+  """
+  @spec rising_factorial(integer, integer) :: integer
+  def rising_factorial(n, 0) when is_integer(n) do
+    1
+  end
+
+  def rising_factorial(n, k) when is_integer(n) and is_integer(k) and k < 0 do
+    raise ArithmeticError
+  end
+
+  def rising_factorial(n, k) when is_integer(n) and is_integer(k) do
+    Enum.reduce(n..(n+(k-1)), 1, fn(x, acc) -> x * acc end)
+  end
+
+  def rising_factorial(_n, _k) do
     raise ArgumentError, "arguments must be integers"
   end
 
