@@ -44,19 +44,19 @@ defmodule Statisaur.Combinatorics do
 
   ### Examples
     The number of outcomes of two from five possibilities is ten.
-      iex(1)> Statisaur.Combinatorics.combinations(5, 2)
+      iex(1)> Statisaur.Combinatorics.n_choose_k(5, 2)
       10
 
     The number of outcomes of eight from twenty possibilities is 125970.
-      iex(2)> Statisaur.Combinatorics.combinations(20, 8)
+      iex(2)> Statisaur.Combinatorics.n_choose_k(20, 8)
       125970
   """
-  @spec combinations(integer, integer) :: integer
-  def combinations(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
+  @spec n_choose_k(integer, integer) :: integer
+  def n_choose_k(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
     div(falling_factorial(n, k), factorial(k))
   end
 
-  def combinations(_n, _k) do
+  def n_choose_k(_n, _k) do
     raise ArgumentError, "arguments must be positive integers"
   end
 
