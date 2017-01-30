@@ -30,4 +30,20 @@ defmodule CombinatoricsTest do
   test "n_choose_k raises an error with non-integer inputs" do
     assert_raise ArgumentError, fn -> Combinatorics.n_choose_k("string", 5) end
   end
+
+  test "falling_factorial with two positive integers" do
+    assert Combinatorics.falling_factorial(10, 5) == 30240
+  end
+
+  test "falling_factorial with first argument negative" do
+    assert Combinatorics.falling_factorial(-10, 5) == -240240
+  end
+
+  test "falling_factorial with second argument negative returns float between zero and one" do
+    assert Combinatorics.falling_factorial(4, -2) == 1/30
+  end
+
+  test "falling factorial with second argument as 0 returns 1" do
+    assert Combinatorics.falling_factorial(4, 0) == 1
+  end
 end
