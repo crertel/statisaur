@@ -46,4 +46,8 @@ defmodule CombinatoricsTest do
   test "falling factorial with second argument as 0 returns 1" do
     assert Combinatorics.falling_factorial(4, 0) == 1
   end
+
+  test "falling factorial with non-integer arguments raises ArgumentError" do
+    assert_raise ArgumentError, fn -> Combinatorics.falling_factorial(:bad, "info") end
+  end
 end
