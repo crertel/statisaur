@@ -24,7 +24,7 @@ defmodule Statisaur.Combinatorics do
       iex(3)> Statisaur.Combinatorics.factorial(-5)
       ** (ArgumentError) argument must be positive integer
   """
-  @spec factorial(integer) :: integer
+  @spec factorial(non_neg_integer) :: non_neg_integer
   def factorial(0) do
     1
   end
@@ -51,7 +51,7 @@ defmodule Statisaur.Combinatorics do
       iex(2)> Statisaur.Combinatorics.n_choose_k(20, 8)
       125970
   """
-  @spec n_choose_k(integer, integer) :: integer
+  @spec n_choose_k(non_neg_integer, non_neg_integer) :: non_neg_integer
   def n_choose_k(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
     div(falling_factorial(n, k), factorial(k))
   end
