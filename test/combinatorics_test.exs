@@ -74,4 +74,8 @@ defmodule CombinatoricsTest do
   test "rising_factorial with second argument negative raises ArithmeticError" do
     assert_raise ArithmeticError, fn -> Combinatorics.rising_factorial(5, -3) end
   end
+
+    test "rising_factorial with non-integer arguments raises ArgumentError" do
+      assert_raise ArgumentError, fn -> Combinatorics.rising_factorial("not", [:good]) end
+    end
 end
