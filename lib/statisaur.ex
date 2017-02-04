@@ -223,13 +223,13 @@ defmodule Statisaur do
   end
 
   @doc """
-  Calculates the kertosis (4th standardized moment) of a list of numbers.
+  Calculates the kurtosis (4th standardized moment) of a list of numbers.
 
   ###Examples
-  iex>Statisaur.kertosis([1,2,3,4])
+  iex>Statisaur.kurtosis([1,2,3,4])
   1.64
   """
-  def kertosis(list) when is_list(list) and length(list) > 1  do    
+  def kurtosis(list) when is_list(list) and length(list) > 1  do    
     standardized_moment(list,4)
   end
 
