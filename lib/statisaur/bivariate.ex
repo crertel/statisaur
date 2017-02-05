@@ -13,8 +13,8 @@ defmodule Statisaur.Bivariate do
  """
  def covariance(list1, list2) when is_list(list1) and is_list(list2) and length(list1) == length(list2) do
    n = length(list1)
-   mu_x = mean(list1)
-   mu_y = mean(list2)
+   mu_x = Statisaur.mean(list1)
+   mu_y = Statisaur.mean(list2)
    numerator = Enum.zip(list1, list2) |>
    Enum.map( fn {x, y} -> (x - mu_x) * (y + mu_y) end ) |> 
    Enum.sum()
