@@ -8,11 +8,11 @@ defmodule Statisaur.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env),
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      package: package,
+      package: package(),
       docs: &docs/0,
-      deps: deps,
+      deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      description: description ]
+      description: description() ]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/helpers"]
@@ -22,11 +22,11 @@ defmodule Statisaur.Mixfile do
   # Configuration for the OTP application
   #
   # Type `mix help compile.app` for more information
-  def application do
+  def application() do
     []
   end
 
-  defp package do
+  defp package() do
     [
       contributors: ["Neeraj Tandon", "Chris Ertel"],
       licenses: ["Public Domain (unlicense)"],
@@ -34,7 +34,7 @@ defmodule Statisaur.Mixfile do
     ]
   end
   
-  defp description do
+  defp description() do
     """
     Statisaur is a simple library for doing univariate and descriptive statistics.
 
@@ -42,7 +42,7 @@ defmodule Statisaur.Mixfile do
     """
   end
 
-  defp deps do
+  defp deps() do
     [
         {:earmark, "~> 0.1", only: :dev },
         {:ex_doc, "~> 0.6", only: :dev},
@@ -51,7 +51,7 @@ defmodule Statisaur.Mixfile do
     ]
   end
 
-  defp docs do
+  defp docs() do
     {ref, 0} = System.cmd("git", ["rev-parse", "--verify", "--quiet", "HEAD"])
     [ source_ref: ref,
      main: "overview"]

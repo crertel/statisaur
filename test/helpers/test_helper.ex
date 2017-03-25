@@ -24,7 +24,7 @@ defmodule Statisaur.TestHelper do
   iex>Statisaur.TestHelper.pluck_all([[1, 4, 3], [2, 3, 1]], 0, [[1, 2], [4, 3], [1, 3]])
   [[1, 2], [4, 3], [1, 3]]
   """
-  def pluck_all(list, ncol, result) when ncol < 1 do
+  def pluck_all(_list, ncol, result) when ncol < 1 do
     result
   end
 
