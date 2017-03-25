@@ -24,24 +24,41 @@ defmodule Statisaur.Bivariate do
   @doc """
   Finds the Pearson correlation of two lists, provided they are of equal length.
 
-  iex> Statisaur.pearson_correlation( [1,2,3,4], [3,4,5,6] )
-  1
+  ### Examples
+  iex> Statisaur.Bivariate.pearson_correlation( [1,2,3,4], [3,4,5,6] ) |> Float.round(4)
+  1.0000
 
-  iex> Statisaur.pearson_correlation( [4,3,2,1], [3,4,5,6] )
-  -1
+  iex> Statisaur.Bivariate.pearson_correlation( [4,3,2,1], [3,4,5,6] ) |> Float.round(4)
+  -1.0000
 
-  iex> Statisaur.pearson_correlation( [1,2,-1,-2], [1,2,3,4] )  
-  -0.8485281
+  iex> Statisaur.Bivariate.pearson_correlation( [1,2,-1,-2], [1,2,3,4] )  |> Float.round(4)
+  -0.8485
+
+  iex> Statisaur.Bivariate.pearson_correlation( [],[] )
+  ** (ArgumentError) arguments must be non-zero length lists
+
+  ie> Statisaur.Bivariate.pearson_correlation( [1,2,3], [4,5] )
+  ** (ArgumentError) arguments must be identical length lists
+
+  ie> Statisaur.Bivariate.pearson_correlation( [1,1], [1,3] )
+  ** (ArithmeticError) std. deviation of one or both inputs is 0
   """
-  def pearson_correlation(list1, list2) when is_list(list1) and is_list(list2) and length(list1) == length(list2) do
+  def pearson_correlation(list1, list2) when is_list(list1) and is_list(list2) and (length(list1) == 0 or length(list2) == 0 ) do
+    raise ArgumentError, "arguments must be non-zero length lists"
+  end
+  def pearson_correlation(list1, list2) when is_list(list1) and is_list(list2) and length(list1) != length(list2) do
+    raise ArgumentError, "arguments must be identical length lists"
+  end
+  def pearson_correlation(list1, list2) when is_list(list1) and is_list(list2) and length(list1) != 0 and length(list2)!=0 and length(list1) == length(list2) do
     covXY = covariance(list1, list2)
     sigmaX = Statisaur.stddev(list1)
     sigmaY = Statisaur.stddev(list2)
 
-    # check that lists are nonzero
-
     # check that the std. deviations are nonzero
 
-    covXY / (sigmaX * sigmaY)
+    case sigmaX*sigmaY do
+      0 -> raise ArithmeticError, "std. deviation of one or both inputs is 0"
+      _ -> covXY / (sigmaX * sigmaY)
+    end
   end
 end
