@@ -73,7 +73,8 @@ defmodule Statisaur.Combinatorics do
   @spec n_choose_k(non_neg_integer, non_neg_integer) :: {:ok, non_neg_integer} | {:error, String.t}
   def n_choose_k(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
     {:ok, fact_k} = factorial(k)
-    response = div(falling_factorial(n, k), fact_k)
+    {:ok, fallen_fact} = falling_factorial(n, k)
+    response = div(fallen_fact, fact_k)
     {:ok, response}
   end
 
@@ -105,53 +106,68 @@ defmodule Statisaur.Combinatorics do
   ### Examples
     The falling factorial of (5, 4) would be `5 * 4 * 3 * 2`
       iex(1)> Statisaur.Combinatorics.falling_factorial(5, 4)
-      120
+      {:ok, 120}
 
     The falling factorial of (5, 3) would be `5 * 4 * 3`
       iex(2)> Statisaur.Combinatorics.falling_factorial(5, 3)
-      60
+      {:ok, 60}
 
     The falling factorial of (5, 2) would be `5 * 4`
       iex(3)> Statisaur.Combinatorics.falling_factorial(5, 2)
-      20
+      {:ok, 20}
 
     With a second argument of `1`, the return value is simply the first argument
       iex(4)> Statisaur.Combinatorics.falling_factorial(5, 1)
-      5
+      {:ok, 5}
 
     Listing the second input as `0` returns 1
       iex(5)> Statisaur.Combinatorics.falling_factorial(5, 0)
-      1
+      {:ok, 1}
 
     The return value is `0` when the second argument is larger than the first, and
     both arguments are positive
       iex(6)> Statisaur.Combinatorics.falling_factorial(5, 7)
-      0
+      {:ok, 0}
     
     When the second argument is negative, the function returns positive values between 1 and 0
       iex(7)> Statisaur.Combinatorics.falling_factorial(1, -2)
-      0.16666666666666666
+      {:ok, 0.16666666666666666}
     
-    When the both arguments are negative, the function raises an ArithmeticError.       
+    When the both arguments are negative, the function returns an error.       
   """
-  @spec falling_factorial(integer, integer) :: integer | float
-  def falling_factorial(n, 0) when is_integer(n) do
-    1
-  end
-
-  def falling_factorial(n, k) when is_integer(n) and is_integer(k) and k < 0 do
-    m = abs(k)
-    1 / falling_factorial((n+m), m)
-  end
-
+  @spec falling_factorial(integer, integer) :: {:ok, integer} | {:ok, float} | {:error, String.t}
   def falling_factorial(n, k) when is_integer(n) and is_integer(k) do
-    Enum.reduce(n..(n-(k-1)), 1, fn(x, acc) -> x * acc end)
+    response = do_falling_factorial(n,k)
+    {:ok, response}
   end
 
   def falling_factorial(_n, _k) do
-    raise ArgumentError, "arguments must be integers"
+    {:error, "arguments must be integers"}
   end
 
+  def falling_factorial!(n, k) do
+    case falling_factorial(n, k) do
+      {:ok, response} -> 
+        response
+      {:error, reason} -> 
+        raise ArgumentError, "#{reason}"
+    end
+  end
+
+
+  @spec do_falling_factorial(integer, integer) :: integer | float
+  defp do_falling_factorial(n, 0) when is_integer(n) do
+    1
+  end
+
+  defp do_falling_factorial(n, k) when is_integer(n) and is_integer(k) and k < 0 do
+    m = abs(k)
+    1 / do_falling_factorial((n+m), m)
+  end
+
+  defp do_falling_factorial(n, k) when is_integer(n) and is_integer(k) do
+    Enum.reduce(n..(n-(k-1)), 1, fn(x, acc) -> x * acc end)
+  end
 
   @doc ~S"""
   The rising factorial, also known as the 'rising sequential product' or 'Pochhammer polynomial',
