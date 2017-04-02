@@ -4,15 +4,19 @@ defmodule CombinatoricsTest do
   alias Statisaur.Combinatorics
 
   test "factorial 5 returns 120" do
-    assert Combinatorics.factorial(5) == 120
+    assert Combinatorics.factorial(5) == {:ok, 120}
   end
 
   test "factorial 0 returns 1" do
-    assert Combinatorics.factorial(0) == 1 
+    assert Combinatorics.factorial(0) == {:ok, 1} 
   end
 
-  test "factorial raises an error with negative integers" do
-    assert_raise ArgumentError, fn -> Combinatorics.factorial(-10) end
+  test "factorial returns error tuple with negative integers" do
+    assert Combinatorics.factorial(-10) == {:error, "argument must be positive integer"}
+  end
+
+  test "factorial! raises an error with negative integers" do
+    assert_raise ArgumentError, fn -> Combinatorics.factorial!(-10) end
   end
 
   test "n_choose_k(4, 2) returns 6" do
