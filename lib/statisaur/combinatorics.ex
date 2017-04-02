@@ -145,6 +145,12 @@ defmodule Statisaur.Combinatorics do
     {:error, "arguments must be integers"}
   end
 
+
+  @doc """
+  Same as `falling_factorial/2` but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  @spec falling_factorial!(integer, integer) :: integer | float | no_return
   def falling_factorial!(n, k) do
     case falling_factorial(n, k) do
       {:ok, response} -> 
