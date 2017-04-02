@@ -24,7 +24,7 @@ defmodule Statisaur.Combinatorics do
     iex(3)> Statisaur.Combinatorics.factorial(-5)
     {:error, "argument must be positive integer"}
   """
-  @spec factorial(non_neg_integer) :: {atom, non_neg_integer} | {atom, String.t}
+  @spec factorial(non_neg_integer) :: {:ok, non_neg_integer} | {:error, String.t}
   def factorial(n) when is_integer(n) and n >= 0 do
     response = do_factorial(n)
     {:ok, response}
@@ -38,6 +38,7 @@ defmodule Statisaur.Combinatorics do
   Same as `factorial/1` but returns the integer directly, or 
   throws `ArgumentError` if an error is returned.
   """
+  @spec factorial(non_neg_integer) :: non_neg_integer | no_return
   def factorial!(n) do
     case factorial(n) do
       {:ok, integer} ->
@@ -63,19 +64,36 @@ defmodule Statisaur.Combinatorics do
   ### Examples
     The number of outcomes of two from five possibilities is ten.
       iex(1)> Statisaur.Combinatorics.n_choose_k(5, 2)
-      10
+      {:ok, 10}
 
     The number of outcomes of eight from twenty possibilities is 125970.
       iex(2)> Statisaur.Combinatorics.n_choose_k(20, 8)
-      125970
+      {:ok, 125970}
   """
-  @spec n_choose_k(non_neg_integer, non_neg_integer) :: non_neg_integer
+  @spec n_choose_k(non_neg_integer, non_neg_integer) :: {:ok, non_neg_integer} | {:error, String.t}
   def n_choose_k(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
-    div(falling_factorial(n, k), factorial(k))
+    {:ok, fact_k} = factorial(k)
+    response = div(falling_factorial(n, k), fact_k)
+    {:ok, response}
   end
 
   def n_choose_k(_n, _k) do
-    raise ArgumentError, "arguments must be positive integers"
+    {:error, "arguments must be positive integers"}
+  end
+
+
+  @doc """
+  Same as `n_choose_k/1` but returns the integer directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  @spec n_choose_k(non_neg_integer, non_neg_integer) :: non_neg_integer  | no_return
+  def n_choose_k!(n, k) do
+    case n_choose_k(n, k) do
+      {:ok, response} -> 
+        response
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc ~S"""
