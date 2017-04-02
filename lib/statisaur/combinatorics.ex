@@ -184,29 +184,48 @@ defmodule Statisaur.Combinatorics do
   ### Examples
     `rising_factorial(5, 4)` is equivalent to `5 * (5 + 1) * (5 + 2) * (5 + 3)`
       iex(1)> Statisaur.Combinatorics.rising_factorial(5, 4)
-      1680
+      {:ok, 1680}
 
     The return value is always `1` when the second argument is `0`
       iex(2)> Statisaur.Combinatorics.rising_factorial(5, 0)
-      1
-    
-    The function raises an `ArithmeticError` when the second argument is negative
-  """
-  @spec rising_factorial(integer, integer) :: integer
-  def rising_factorial(n, 0) when is_integer(n) do
-    1
-  end
-
+      {:ok, 1}
+      """
+  @spec rising_factorial(integer, integer) :: {:ok, integer} | {:error, String.t}
   def rising_factorial(n, k) when is_integer(n) and is_integer(k) and k < 0 do
-    raise ArithmeticError
+    {:error, "bad argument in arithmetic expression"}
   end
 
   def rising_factorial(n, k) when is_integer(n) and is_integer(k) do
-    Enum.reduce(n..(n+(k-1)), 1, fn(x, acc) -> x * acc end)
+    response = do_rising_factorial(n, k)
+    {:ok, response}
   end
 
   def rising_factorial(_n, _k) do
-    raise ArgumentError, "arguments must be integers"
+    {:error, "arguments must be integers"}
   end
 
+
+
+  @doc """
+  Same as `rising_factorial/2` but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  @spec rising_factorial!(integer, integer) :: integer | no_return
+  def rising_factorial!(n, k) do
+    case rising_factorial(n, k) do
+    {:ok, response} ->
+      response
+    {:error, reason} ->
+      raise ArgumentError, "#{reason}"
+    end
+  end
+
+  @spec do_rising_factorial(integer, integer) :: integer
+  defp do_rising_factorial(n, 0) when is_integer(n) do
+    1
+  end
+
+  defp do_rising_factorial(n, k) when is_integer(n) and is_integer(k) do
+    Enum.reduce(n..(n+(k-1)), 1, fn(x, acc) -> x * acc end)
+  end
 end
