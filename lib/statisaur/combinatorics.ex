@@ -13,28 +13,46 @@ defmodule Statisaur.Combinatorics do
     The factorial of 5 is (5 * 4 * 3 * 2 * 1), or 120.
 
       iex(1)> Statisaur.Combinatorics.factorial(5)
-      120
+      {:ok, 120}
 
     The factorial of 0 is 1, according to the convention for an empty product.
 
       iex(2)> Statisaur.Combinatorics.factorial(0)
-      1
+      {:ok, 1}
 
-    Statisaur will raise an error in the case of negative integers.
-      iex(3)> Statisaur.Combinatorics.factorial(-5)
-      ** (ArgumentError) argument must be positive integer
+    Statisaur will return an error tuple in the case of negative integers.
+    iex(3)> Statisaur.Combinatorics.factorial(-5)
+    {:error, "argument must be positive integer"}
   """
-  @spec factorial(non_neg_integer) :: non_neg_integer
-  def factorial(0) do
-    1
-  end
-
-  def factorial(n) when is_integer(n) and n > 0  do
-    Enum.reduce((1..n), 1, fn(x, acc) -> x * acc end)
+  @spec factorial(non_neg_integer) :: {atom, non_neg_integer} | {atom, String.t}
+  def factorial(n) when is_integer(n) and n >= 0 do
+    response = do_factorial(n)
+    {:ok, response}
   end
 
   def factorial(_term) do
-    raise ArgumentError, "argument must be positive integer"
+    {:error, "argument must be positive integer"}
+  end
+
+  @doc """
+  Same as `factorial/1` but returns the integer directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def factorial!(n) do
+    case factorial(n) do
+      {:ok, integer} ->
+        integer
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
+  end
+
+  defp do_factorial(0) do
+    1
+  end
+
+  defp do_factorial(n) when is_integer(n) and n > 0  do
+    Enum.reduce((1..n), 1, fn(x, acc) -> x * acc end)
   end
 
   @doc ~S"""
