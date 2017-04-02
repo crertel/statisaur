@@ -92,11 +92,11 @@ defmodule CombinatoricsTest do
   end
 
   test "rising_factorial with non-integer arguments raises ArgumentError" do
-    assert Combinatorics.rising("not", [:good]) == {:error, "arguments must be integers"}
+    assert Combinatorics.rising_factorial("not", [:good]) == {:error, "arguments must be integers"}
   end
 
-  test "rising_factorial! with second argument negative raises ArithmeticError" do
-    assert_raise ArithmeticError, fn -> Combinatorics.rising_factorial!(5, -3) end
+  test "rising_factorial! with second argument negative raises ArgumentError" do
+    assert_raise ArgumentError, fn -> Combinatorics.rising_factorial!(5, -3) end
   end
 
   test "rising_factorial! with non-integer arguments raises ArgumentError" do
