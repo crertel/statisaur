@@ -44,23 +44,28 @@ defmodule CombinatoricsTest do
   end
 
   test "falling_factorial with two positive integers" do
-    assert Combinatorics.falling_factorial(10, 5) == 30240
+    assert Combinatorics.falling_factorial(10, 5) == {:ok, 30240}
   end
 
   test "falling_factorial with first argument negative" do
-    assert Combinatorics.falling_factorial(-10, 5) == -240240
+    assert Combinatorics.falling_factorial(-10, 5) == {:ok, -240240}
   end
 
   test "falling_factorial with second argument negative returns float between zero and one" do
-    assert Combinatorics.falling_factorial(4, -2) == 1/30
+    assert Combinatorics.falling_factorial(4, -2) == {:ok, 1/30}
   end
 
   test "falling_factorial with second argument as 0 returns 1" do
-    assert Combinatorics.falling_factorial(4, 0) == 1
+    assert Combinatorics.falling_factorial(4, 0) == {:ok, 1}
   end
 
-  test "falling_factorial with non-integer arguments raises ArgumentError" do
-    assert_raise ArgumentError, fn -> Combinatorics.falling_factorial(:bad, "info") end
+  test "falling_factorial with non-integer arguments returns error tuple" do
+    assert Combinatorics.falling_factorial(:bad, "info") == {:error, "arguments must be integers"}
+  end
+
+
+  test "falling_factorial! with non-integer arguments raises ArgumentError" do
+    assert_raise ArgumentError, fn -> Combinatorics.falling_factorial!(:bad, "info") end
   end
 
   test "rising_factorial with two positive integers" do
