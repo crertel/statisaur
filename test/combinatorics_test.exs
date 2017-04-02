@@ -20,19 +20,27 @@ defmodule CombinatoricsTest do
   end
 
   test "n_choose_k(4, 2) returns 6" do
-    assert Combinatorics.n_choose_k(4, 2) == 6
+    assert Combinatorics.n_choose_k(4, 2) == {:ok, 6}
   end
 
   test "n_choose_k(15, 8) returns 6435" do
-    assert Combinatorics.n_choose_k(15, 8) == 6435
+    assert Combinatorics.n_choose_k(15, 8) == {:ok, 6435}
   end
 
-  test "n_choose_k raises an error with negative integers" do
-    assert_raise ArgumentError, fn -> Combinatorics.n_choose_k(10, -5) end
+  test "n_choose_k returns an error tuple with negative integers" do
+    assert Combinatorics.n_choose_k(10, -5) == {:error, "arguments must be positive integers"}  
   end
 
-  test "n_choose_k raises an error with non-integer inputs" do
-    assert_raise ArgumentError, fn -> Combinatorics.n_choose_k("string", 5) end
+  test "n_choose_k! raises an error with negative integers" do
+    assert_raise ArgumentError, fn -> Combinatorics.n_choose_k!(10, -5) end
+  end
+
+  test "n_choose_k returns an error  tuple with non-integer inputs" do
+    assert Combinatorics.n_choose_k("string", 5) == {:error, "arguments must be positive integers"}
+  end
+
+  test "n_choose_k! raises an error with non-integer inputs" do
+    assert_raise ArgumentError, fn -> Combinatorics.n_choose_k!("string", 5) end
   end
 
   test "falling_factorial with two positive integers" do
