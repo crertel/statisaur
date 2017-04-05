@@ -8,12 +8,29 @@ defmodule StatisaurTest do
   @eps 1.0e-4
 
   test "min([1,1,2,3,5,8]) returns 1" do
-    assert 1 == Statisaur.min([1,1,2,3,5,8])
+    assert {:ok, 1} == Statisaur.min([1,1,2,3,5,8])
+  end
+
+  test "min([]) returns error tuple" do
+    assert {:error, "argument must be nonempty list of numbers"} == Statisaur.min([])
+  end
+
+  test "min!([]) raises error" do
+    assert_raise ArgumentError, fn -> Statisaur.min!([]) end
   end
 
   test "max([1,1,2,3,5,8]) returns 8" do
-    assert 8 == Statisaur.max([1,1,2,3,5,8])
+    assert {:ok, 8} == Statisaur.max([1,1,2,3,5,8])
   end
+
+  test "max([]) returns error tuple" do
+    assert {:error, "argument must be nonempty list of numbers"} == Statisaur.max([])
+  end
+
+  test "max!([]) raises error" do
+    assert_raise ArgumentError, fn -> Statisaur.max!([]) end
+  end
+
 
   test "sum([1,3,5,7,9])returns 25" do
     assert 25 == Statisaur.sum([1,3,5,7,9])
