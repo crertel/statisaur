@@ -10,11 +10,37 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.min([1,2,3])
-  1
+  {:ok, 1}
   iex>Statisaur.min([5,0.5,2,3])
-  0.5
+  {:ok, 0.5}
+
+  Statisaur will return an error tuple for empty lists.
+  iex>Statisaur.min([])
+  {:error, "argument must be nonempty list of numbers"}
   """
   def min(list) when is_list(list) and length(list) > 1 do
+    response = do_min(list)
+    {:ok, response}
+  end
+
+  def min(_list) do
+    {:error, "argument must be nonempty list of numbers"}
+  end
+
+  @doc """
+  Same as `min/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def min!(list) do
+    case min(list) do
+      {:ok, response} ->
+        response
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
+  end
+
+  defp do_min(list) when is_list(list) and length(list) > 1 do
     Enum.min(list)
   end
 
@@ -22,11 +48,37 @@ defmodule Statisaur do
   Calculate the largest value from a list of numbers.
   ### Examples
   iex>Statisaur.max([1,2,3])
-  3
+  {:ok, 3}
   iex>Statisaur.max([5.1,0.5,2,3])
-  5.1
+  {:ok, 5.1}
+
+  Statisaur returns an error tuple with empty lists.
+  iex>Statisaur.max([])
+  {:error, "argument must be nonempty list of numbers"}
   """
   def max(list) when is_list(list) and length(list) > 1 do
+    response = do_max(list)
+    {:ok, response}
+  end
+
+  def max(_list) do
+    {:error, "argument must be nonempty list of numbers"}
+  end
+
+  @doc """
+  Same as `max/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def max!(list) do
+    case max(list) do
+      {:ok, response} ->
+        response
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
+  end
+
+  defp do_max(list) when is_list(list) and length(list) > 1 do
     Enum.max(list)
   end
 
