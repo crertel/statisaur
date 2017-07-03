@@ -48,12 +48,20 @@ defmodule StatisaurTest do
     assert {:error, "argument must be list of numbers"} == Statisaur.sum([:list_of, "bad_stuff"])
   end
 
+  test "sum/1 returns an error turble when given list with first argument as number and second argument invalid" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.sum([5, "hidden badstuff"])
+  end
+
   test "sum!([1,3,5,7,9]) returns 25" do
     assert 25 == Statisaur.sum!([1,3,5,7,9])
   end
 
   test "sum!(:bad_info) raises an error" do
     assert_raise ArgumentError, fn -> Statisaur.sum!([:bad_info]) end
+  end
+
+  test "sum!([15, :bad_info]} raises an error" do
+    assert_raise ArgumentError, fn -> Statisaur.sum!([15, :bad_info]) end 
   end
 
   test "mean([1,3,5,7,9]) returns 5" do

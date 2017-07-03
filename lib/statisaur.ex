@@ -97,7 +97,14 @@ defmodule Statisaur do
 
   """
   @spec sum([number]) :: {:ok, number} | {:error, String.t}
-  def sum(list = [number | _tail]) when is_list(list) and is_number(number), do: {:ok, Enum.sum(list)}
+  def sum(list = [number | _tail]) when is_list(list) and is_number(number) do
+    try do 
+      result = Enum.sum(list) 
+      {:ok, result}
+    rescue
+      ArithmeticError -> {:error, "argument must be list of numbers"}
+    end
+  end
 
   def sum(_not_list), do: {:error, "argument must be list of numbers"}
 
@@ -121,12 +128,20 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.mean([1,3,5,7,9])
-  5.0
+  {:ok, 5.0}
   iex>Statisaur.mean([0.1,0.2,0.6])
-  0.3
+  {:ok, 0.3}
 
   """
-  def mean(list) when is_list(list), do: sum(list)/length(list)
+  @spec mean([number]) :: {:ok, float} | {:error, String.t}
+  def mean(list) when is_list(list) do
+    with {:ok, result} <- sum(list) do
+     {:ok, result/length(list)}
+    else
+      {:error, reason} ->
+        {:error, reason}
+    end
+ end
 
   @doc """
   Calculate the median from a list of numbers
