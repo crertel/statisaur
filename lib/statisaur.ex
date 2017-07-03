@@ -87,14 +87,34 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.sum([1,3,5,7,9])
-  25
+  {:ok, 25}
   iex>Statisaur.sum([1,1])
-  2
+  {:ok, 2}
   iex>Statisaur.sum([0.5,0.5])
-  1.0
+  {:ok, 1.0}
+  iex> Statisaur.sum(:banana)
+  {:error, "argument must be list of numbers"}
 
   """
-  def sum(list) when is_list(list), do: Enum.sum(list)
+  @spec sum([number]) :: {:ok, number} | {:error, String.t}
+  def sum(list = [number | _tail]) when is_list(list) and is_number(number), do: {:ok, Enum.sum(list)}
+
+  def sum(_not_list), do: {:error, "argument must be list of numbers"}
+
+  @doc """
+  Same as `sum/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+
+  def sum!(list) do
+    case sum(list) do
+      {:ok, response} ->
+        response
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
+  end
+
 
   @doc """
   Calculate the mean from a list of numbers

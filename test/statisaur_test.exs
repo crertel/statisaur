@@ -33,11 +33,27 @@ defmodule StatisaurTest do
 
 
   test "sum([1,3,5,7,9])returns 25" do
-    assert 25 == Statisaur.sum([1,3,5,7,9])
+    assert {:ok, 25} == Statisaur.sum([1,3,5,7,9])
   end
 
   test "sum([1,1])returns 2" do
-    assert 2 == Statisaur.sum([1,1])
+    assert {:ok, 2} == Statisaur.sum([1,1])
+  end
+
+  test "sum/1 returns an error tuple when given non-list argument" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.sum(:not_a_list)
+  end
+
+  test "sum/1 returns an error tuple when given list of non-numbers as argument" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.sum([:list_of, "bad_stuff"])
+  end
+
+  test "sum!([1,3,5,7,9]) returns 25" do
+    assert 25 == Statisaur.sum!([1,3,5,7,9])
+  end
+
+  test "sum!(:bad_info) raises an error" do
+    assert_raise ArgumentError, fn -> Statisaur.sum!([:bad_info]) end
   end
 
   test "mean([1,3,5,7,9]) returns 5" do
