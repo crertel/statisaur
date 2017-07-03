@@ -141,7 +141,21 @@ defmodule Statisaur do
       {:error, reason} ->
         {:error, reason}
     end
- end
+  end
+
+  @doc """
+  Same as `mean/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+
+  def mean!(list) do
+    case mean(list) do
+      {:ok, response} ->
+        response
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
+  end
 
   @doc """
   Calculate the median from a list of numbers

@@ -65,15 +65,27 @@ defmodule StatisaurTest do
   end
 
   test "mean([1,3,5,7,9]) returns 5" do
-    assert 5 == Statisaur.mean([1,3,5,7,9])
+    assert {:ok, 5} == Statisaur.mean([1,3,5,7,9])
   end
 
   test "mean([0.1,0.2,0.6]) returns 0.3" do
-    assert 0.3 == Statisaur.mean([0.1,0.2,0.6])
+    assert {:ok, 0.3} == Statisaur.mean([0.1,0.2,0.6])
   end
 
   test "mean(@large) returns 5000.5" do
-    assert 5000.5 == Statisaur.mean(@large)
+    assert {:ok, 5000.5} == Statisaur.mean(@large)
+  end
+
+  test "mean([1, 3, 5, :uh_oh]) returns an error tuple" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.mean([1, 3, 5, :uh_oh])
+  end 
+
+  test "mean!([1, 3, 5, :uh_oh]) rasies an error" do
+    assert_raise ArgumentError, fn -> Statisaur.mean!([1, 3, 5, :uh_oh]) end 
+  end
+
+  test "mean!([1,3,5,7,9]) returns 5 directly" do
+    assert 5 == Statisaur.mean!([1,3,5,7,9])
   end
 
   test "median([0.1,0.2,0.6) returns 0.2" do
