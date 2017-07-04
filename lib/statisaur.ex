@@ -298,8 +298,7 @@ defmodule Statisaur do
   {:ok, 0.06999999999999999}
 
   """
-  def variance(list) when is_list(list) and length(list) > 1 do
-    # {:ok, mu} = mean(list)   
+  def variance(list) when is_list(list) and length(list) > 1 do  
     with {:ok, mu} <- mean(list),
          {:ok, pe} <- powered_error(list, mu, 2),
          diffmeans <- Enum.sum(pe),
@@ -309,10 +308,6 @@ defmodule Statisaur do
     else {:error, reason} ->
       {:error, reason}
     end 
-    # diffmeans = list |> powered_error( mu, 2 ) |> Enum.sum
-    # df = length(list) - 1
-    # result = diffmeans/df
-    # {:ok, result}
   end
 
   @doc """
