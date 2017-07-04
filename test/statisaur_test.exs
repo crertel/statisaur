@@ -153,4 +153,12 @@ defmodule StatisaurTest do
     assert_raise ArgumentError, fn -> Statisaur.stddev!(@bad_data) end
   end
 
+  test "raw_moment returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers and an integer"} == Statisaur.raw_moment(@bad_data, 6)
+  end
+
+  test "raw_moment! raises an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.raw_moment!(@bad_data, 5) end
+  end
+
 end

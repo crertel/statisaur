@@ -360,17 +360,37 @@ defmodule Statisaur do
 
   ###Examples
   iex>Statisaur.raw_moment([1,2,3,4],1)
-  2.5
+  {:ok, 2.5}
   iex>Statisaur.raw_moment([1,2,3,4],2)
-  7.5
+  {:ok, 7.5}
   iex>Statisaur.raw_moment([1,2,3,4],3)
-  25.0
+  {:ok, 25.0}
   iex>Statisaur.raw_moment([1,2,3,4],4)
-  88.5
+  {:ok, 88.5}
   """
   def raw_moment(list, k) when is_list(list) and length(list) > 1 do
+    try do 
     count = length(list)  
-    (list |> Enum.map( fn(x) -> :math.pow( x, k) end ) |> Enum.sum) / count
+    result = (list |> Enum.map( fn(x) -> :math.pow( x, k) end ) |> Enum.sum) / count
+    {:ok, result}
+    rescue
+      ArithmeticError -> {:error, "argument must be list of numbers and an integer"}
+      ArgumentError -> {:error, "argument must be list of numbers and an integer"}
+    end
+  end
+
+
+  @doc """
+  Same as `raw_moment/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def raw_moment!(list, k) do
+    case raw_moment(list, k) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """
