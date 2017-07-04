@@ -6,6 +6,7 @@ defmodule StatisaurTest do
 
   @large Enum.to_list(1..10000)
   @eps 1.0e-4
+  @bad_data [:a, :b, :c]
 
   test "min([1,1,2,3,5,8]) returns 1" do
     assert {:ok, 1} == Statisaur.min([1,1,2,3,5,8])
@@ -45,23 +46,19 @@ defmodule StatisaurTest do
   end
 
   test "sum/1 returns an error tuple when given list of non-numbers as argument" do
-    assert {:error, "argument must be list of numbers"} == Statisaur.sum([:list_of, "bad_stuff"])
+    assert {:error, "argument must be list of numbers"} == Statisaur.sum(@bad_data)
   end
 
   test "sum/1 returns an error turble when given list with first argument as number and second argument invalid" do
-    assert {:error, "argument must be list of numbers"} == Statisaur.sum([5, "hidden badstuff"])
+    assert {:error, "argument must be list of numbers"} == Statisaur.sum(@bad_data)
   end
 
   test "sum!([1,3,5,7,9]) returns 25" do
     assert 25 == Statisaur.sum!([1,3,5,7,9])
   end
 
-  test "sum!(:bad_info) raises an error" do
-    assert_raise ArgumentError, fn -> Statisaur.sum!([:bad_info]) end
-  end
-
-  test "sum!([15, :bad_info]} raises an error" do
-    assert_raise ArgumentError, fn -> Statisaur.sum!([15, :bad_info]) end 
+  test "sum! raises an error when given a list of bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.sum!(@bad_data) end
   end
 
   test "mean([1,3,5,7,9]) returns 5" do
@@ -76,12 +73,12 @@ defmodule StatisaurTest do
     assert {:ok, 5000.5} == Statisaur.mean(@large)
   end
 
-  test "mean([1, 3, 5, :uh_oh]) returns an error tuple" do
-    assert {:error, "argument must be list of numbers"} == Statisaur.mean([1, 3, 5, :uh_oh])
+  test "mean returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.mean(@bad_data)
   end 
 
-  test "mean!([1, 3, 5, :uh_oh]) rasies an error" do
-    assert_raise ArgumentError, fn -> Statisaur.mean!([1, 3, 5, :uh_oh]) end 
+  test "mean! rasies an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.mean!(@bad_data) end 
   end
 
   test "mean!([1,3,5,7,9]) returns 5 directly" do
@@ -96,16 +93,16 @@ defmodule StatisaurTest do
     assert {:ok, 0.5} == Statisaur.median([0.7,0.4,0.6,0.1])
   end
 
-  test "median([:bad_info, 3, 5, 7]) returns an error tuple" do
-    assert {:error, "argument must be nonempty list of numbers"} == Statisaur.median([:bad_info, 3, 5, 7])
+  test "median returns an error tuple when given bad data" do
+    assert {:error, "argument must be nonempty list of numbers"} == Statisaur.median(@bad_data)
   end
 
   test "median!([9,3,7,5,1]) returns 5 directly" do
     assert 5 == Statisaur.median!([9, 3, 7, 5, 1])
   end
 
-  test "median!([:bad_info, 1, 5, 6]) raises an error" do
-    assert_raise ArgumentError, fn -> Statisaur.median!([:bad_info, 1, 5, 6]) end
+  test "median! raises an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.median!(@bad_data) end
   end
 
   test "variance([0.1,0.2,0.6]) returns 0.06999999999999999" do
@@ -116,8 +113,8 @@ defmodule StatisaurTest do
     assert {:ok, 8334166.666666667} == Statisaur.variance(@large)
   end
 
-  test "variance([:a, :bad, :list]) returns an error tuple" do
-    assert {:error, "argument must be list of numbers"} == Statisaur.variance([:a, :bad, :list])
+  test "variance returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.variance(@bad_data)
   end
 
   test "variance!(@large) returns 8334166.666666667 directly" do
@@ -125,7 +122,7 @@ defmodule StatisaurTest do
   end
 
   test "variance! raises an exception when given bad data" do
-     assert_raise ArgumentError, fn -> Statisaur.variance!([:bad_info, 1, 5, 6]) end
+     assert_raise ArgumentError, fn -> Statisaur.variance!(@bad_data) end
   end
 
   test "stddev([0.1,0.2,0.6]) returns 0.2645751" do
@@ -139,7 +136,7 @@ defmodule StatisaurTest do
   end
 
   test "stddev returns an error tuple when given bad data" do
-    assert {:error, "argument must be list of numbers"} == Statisaur.stddev([:a, :bad, :list])
+    assert {:error, "argument must be list of numbers"} == Statisaur.stddev(@bad_data)
   end
 
   test "stddev!([0.1,0.2,0.6]) returns 0.2645751 directly" do
@@ -153,7 +150,7 @@ defmodule StatisaurTest do
   end
 
   test "stddev! raises an error when given bad data" do
-    assert_raise ArgumentError, fn -> Statisaur.stddev!([:a, :bad, :list]) end
+    assert_raise ArgumentError, fn -> Statisaur.stddev!(@bad_data) end
   end
 
 end
