@@ -421,7 +421,6 @@ defmodule Statisaur do
     # (list |> powered_error(mu, k) |> Enum.sum) / count
   end
 
-
   @doc """
   Same as `central_moment/1`, but but returns the response directly, or 
   throws `ArgumentError` if an error is returned.
@@ -440,19 +439,40 @@ defmodule Statisaur do
 
   ###Examples
   iex>Statisaur.standardized_moment([1,2,3,4],1)
-  0.0
+  {:ok, 0.0}
   iex>Statisaur.standardized_moment([1,2,3,4],2)
-  1.0
+  {:ok, 1.0}
   iex>Statisaur.standardized_moment([1,2,3,4],3)
-  0.0
+  {:ok, 0.0}
   iex>Statisaur.standardized_moment([1,2,3,4],4)
-  1.64
+  {:ok, 1.64}
   """
-  def standardized_moment(list, k) when is_list(list) and length(list) > 1 do            
-    m1 = raw_moment(list,1)
-    num = (powered_error(list, m1, k) |> Enum.sum) / length(list)
-    denom = :math.pow( (powered_error(list, m1, 2) |> Enum.sum)/length(list), k/2)
-    num/denom
+  def standardized_moment(list, k) when is_list(list) and length(list) > 1 do 
+    with {:ok, m1} <- raw_moment(list, 1),
+          {:ok, pe} <- powered_error(list, m1, k),
+          len <- length(list),
+          num <- Enum.sum(pe) / len,
+          {:ok, pe2} <- powered_error(list, m1, 2),
+          denom <- :math.pow( (Enum.sum(pe2)/len), k/2 )
+      do
+        {:ok, num/denom}
+      else
+        {:error, reason} ->
+          {:error, reason}
+      end
+  end
+
+  @doc """
+  Same as `standardized_moment/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def standardized_moment!(list, k) do
+    case central_moment(list, k) do
+    {:ok, result} ->
+      result
+    {:error, reason} ->
+      raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """

@@ -169,4 +169,12 @@ defmodule StatisaurTest do
     assert_raise ArgumentError, fn -> Statisaur.central_moment!(@bad_data, 8) end
   end
 
+  test "standardized_moment returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers and an integer"} == Statisaur.standardized_moment(@bad_data, 8)
+  end
+
+  test "standardized_moment! raises an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.standardized_moment!(@bad_data, 8) end
+  end
+
 end
