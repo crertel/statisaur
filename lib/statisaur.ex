@@ -241,15 +241,33 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.mode([1,1,2,3])
-  [1]
+  {:ok, [1]}
   iex>Statisaur.mode([1.0,2.0,2.0,3.0,3.0])
-  [2.0,3.0]
+  {:ok, [2.0,3.0]}
   """
-  def mode(list) when is_list(list) and length(list) > 0 do
+  def mode(list = [number | _tail]) when is_list(list) and is_number(number) and length(list) > 0 do
     {:ok, freqs} = frequencies(list)
     sorted_freqs = freqs |> Enum.sort_by(fn({_,f})->f end, &>=/2)
     {_, mode_guess} = sorted_freqs |> Enum.at(0)
-    sorted_freqs |> Enum.filter( fn({_,f})-> f >= mode_guess end) |> Enum.map( fn({v,_})->v end)
+    result = sorted_freqs |> Enum.filter( fn({_,f})-> f >= mode_guess end) |> Enum.map( fn({v,_})->v end)
+    {:ok, result}
+  end
+
+  def mode(_list) do
+    {:error, "argument must be nonempty list of numbers"}
+  end
+
+  @doc """
+  Same as `mode/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def mode!(list) do
+    case mode(list) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """
@@ -257,10 +275,17 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.powered_error( [1,2,3], 2, 1)
-  [-1.0,0.0,1.0]
+  {:ok, [-1.0,0.0,1.0]}
   """
-  def powered_error( list, reference, k) when is_list(list) and length(list) > 1 do
+  def powered_error(list = [number | _tail], reference, k) when is_list(list) and length(list) > 1 and is_number(number)
+    and is_number(reference) and is_number(k) do
+    result = 
     list |> Enum.map( fn(x) -> :math.pow( x - reference, k) end )
+    {:ok, result}
+  end
+
+  def powered_error(_list, _ref, _k) do
+    {:error, "argument must be nonempty list of numbers, a number, and a number"}
   end
 
   @doc """
@@ -268,16 +293,39 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.variance([1,3,5,7,9])
-  10.0
+  {:ok, 10.0}
   iex>Statisaur.variance([0.1,0.2,0.6])
-  0.06999999999999999
+  {:ok, 0.06999999999999999}
 
   """
   def variance(list) when is_list(list) and length(list) > 1 do
-    mu = mean(list)    
-    diffmeans = list |> powered_error( mu, 2 ) |> Enum.sum
-    df = length(list) - 1
-    diffmeans/df
+    # {:ok, mu} = mean(list)   
+    with {:ok, mu} <- mean(list),
+         {:ok, pe} <- powered_error(list, mu, 2),
+         diffmeans <- Enum.sum(pe),
+         df <- length(list) - 1,
+         result <- diffmeans/df
+      do {:ok, result} 
+    else {:error, reason} ->
+      {:error, reason}
+    end 
+    # diffmeans = list |> powered_error( mu, 2 ) |> Enum.sum
+    # df = length(list) - 1
+    # result = diffmeans/df
+    # {:ok, result}
+  end
+
+  @doc """
+  Same as `variance/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def variance!(list) do
+    case variance(list) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}" 
+    end
   end
 
   @doc """
@@ -285,12 +333,31 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.stddev([1,3,5,7,9]) |> Float.round(6)
-  3.162278
+  {:ok, 3.162278}
   iex>Statisaur.stddev([0.1,0.2,0.6]) |> Float.round(6)
-  0.264575
+  {:ok, 0.264575}
   """
   def stddev(list) when is_list(list) and length(list) > 1 do
-    list |> variance |> :math.sqrt
+    with {:ok, var} <- variance(list),
+          result <- :math.sqrt(var)
+      do  {:ok, result}
+    else 
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Same as `stddev/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def stddev!(list) do
+    case stddev(list) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """

@@ -109,19 +109,51 @@ defmodule StatisaurTest do
   end
 
   test "variance([0.1,0.2,0.6]) returns 0.06999999999999999" do
-    assert 0.06999999999999999 == Statisaur.variance([0.1,0.2,0.6])
+    assert {:ok, 0.06999999999999999} == Statisaur.variance([0.1,0.2,0.6])
   end
 
   test "variance(@large) returns 8334166.666666667" do
-    assert 8334166.666666667 == Statisaur.variance(@large)
+    assert {:ok, 8334166.666666667} == Statisaur.variance(@large)
+  end
+
+  test "variance([:a, :bad, :list]) returns an error tuple" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.variance([:a, :bad, :list])
+  end
+
+  test "variance!(@large) returns 8334166.666666667 directly" do
+    assert 8334166.666666667 == Statisaur.variance!(@large)
+  end
+
+  test "variance! raises an exception when given bad data" do
+     assert_raise ArgumentError, fn -> Statisaur.variance!([:bad_info, 1, 5, 6]) end
   end
 
   test "stddev([0.1,0.2,0.6]) returns 0.2645751" do
-    assert_in_delta( 0.2645751, Statisaur.stddev([0.1,0.2,0.6]), @eps )
+    {:ok, dev} = Statisaur.stddev([0.1,0.2,0.6])
+    assert_in_delta( 0.2645751, dev, @eps )
   end
 
   test "stddev(@large) returns 2886.895679" do
-    assert_in_delta(2886.895679, Statisaur.stddev(@large), @eps )
+    {:ok, dev} = Statisaur.stddev(@large)
+    assert_in_delta(2886.895679, dev, @eps)
+  end
+
+  test "stddev returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.stddev([:a, :bad, :list])
+  end
+
+  test "stddev!([0.1,0.2,0.6]) returns 0.2645751 directly" do
+    dev = Statisaur.stddev!([0.1,0.2,0.6])
+    assert_in_delta( 0.2645751, dev, @eps )
+  end
+
+  test "stddev!(@large) returns 2886.895679 directly" do
+    dev = Statisaur.stddev!(@large)
+    assert_in_delta(2886.895679, dev, @eps)
+  end
+
+  test "stddev! raises an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.stddev!([:a, :bad, :list]) end
   end
 
 end
