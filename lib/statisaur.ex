@@ -207,15 +207,33 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.frequencies([1])
-  [{1,1}]
+  {:ok, [{1,1}]}
   iex>Statisaur.frequencies([1,2,2,3])
-  [{1,1},{2,2},{3,1}]
+  {:ok, [{1,1},{2,2},{3,1}]}
   """
   def frequencies(list) when is_list(list) do
     sorted = list |> Enum.sort
     vals = sorted |> Enum.uniq
     freqs = vals |> Enum.map( fn(v) -> Enum.count(sorted, fn(x)-> x == v end) end)
-    Enum.zip(vals,freqs)
+    result = Enum.zip(vals,freqs)
+    {:ok, result}
+  end
+
+  def frequencies(_list) do
+    {:error, "Argument must be an enumerable"}
+  end
+
+  @doc """
+  Same as `frequencies/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def frequencies!(list) do
+    case frequencies(list) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """
@@ -228,7 +246,7 @@ defmodule Statisaur do
   [2.0,3.0]
   """
   def mode(list) when is_list(list) and length(list) > 0 do
-    freqs = frequencies(list)
+    {:ok, freqs} = frequencies(list)
     sorted_freqs = freqs |> Enum.sort_by(fn({_,f})->f end, &>=/2)
     {_, mode_guess} = sorted_freqs |> Enum.at(0)
     sorted_freqs |> Enum.filter( fn({_,f})-> f >= mode_guess end) |> Enum.map( fn({v,_})->v end)
