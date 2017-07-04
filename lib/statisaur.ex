@@ -162,23 +162,43 @@ defmodule Statisaur do
 
   ### Examples
   iex>Statisaur.median([1,3,5,7,9])
-  5
+  {:ok, 5}
   iex>Statisaur.median([1,1])
-  1.0
+  {:ok, 1.0}
   iex>Statisaur.median([0.1,0.4,0.6,0.9])
-  0.5
+  {:ok, 0.5}
 
   """
-  def median(list) when is_list(list) do
+  @spec median([number]) :: {:ok, number} | {:error, String.t}
+  def median(list = [number | _tail]) when is_list(list) and is_number(number) do
     n = length(list)
     sorted = list |> Enum.sort
     pivot = round(n/2)
 
-    case rem(n,2)  do
+    result = case rem(n,2)  do
       0 -> a = sorted |> Enum.at(pivot) 
            b = sorted |> Enum.at(pivot - 1) 
            (a+b)/2 # median for an even-sized set is the mean of the middle numbers
       _ -> sorted |> Enum.at(round(Float.floor(n/2))) # this seems weird, but Float floor yields float not int :()
+    end
+    {:ok, result}
+  end
+
+  def median(_list) do
+    {:error, "argument must be nonempty list of numbers"}
+  end
+
+
+  @doc """
+  Same as `median/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def median!(list) do
+    case median(list) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
     end
   end
 

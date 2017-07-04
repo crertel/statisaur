@@ -89,11 +89,23 @@ defmodule StatisaurTest do
   end
 
   test "median([0.1,0.2,0.6) returns 0.2" do
-    assert 0.2 == Statisaur.median([0.1,0.2,0.6])
+    assert {:ok, 0.2} == Statisaur.median([0.1,0.2,0.6])
   end
 
   test "median([0.7,0.4,0.6,0.1]) returns 0.5" do
-    assert 0.5 == Statisaur.median([0.7,0.4,0.6,0.1])
+    assert {:ok, 0.5} == Statisaur.median([0.7,0.4,0.6,0.1])
+  end
+
+  test "median([:bad_info, 3, 5, 7]) returns an error tuple" do
+    assert {:error, "argument must be nonempty list of numbers"} == Statisaur.median([:bad_info, 3, 5, 7])
+  end
+
+  test "median!([9,3,7,5,1]) returns 5 directly" do
+    assert 5 == Statisaur.median!([9, 3, 7, 5, 1])
+  end
+
+  test "median!([:bad_info, 1, 5, 6]) raises an error" do
+    assert_raise ArgumentError, fn -> Statisaur.median!([:bad_info, 1, 5, 6]) end
   end
 
   test "variance([0.1,0.2,0.6]) returns 0.06999999999999999" do
