@@ -398,18 +398,41 @@ defmodule Statisaur do
 
   ###Examples
   iex>Statisaur.central_moment([1,2,3,4],1)
-  0.0
+  {:ok, 0.0}
   iex>Statisaur.central_moment([1,2,3,4],2)
-  1.25
+  {:ok, 1.25}
   iex>Statisaur.central_moment([1,2,3,4],3)
-  0.0
-  iex>Statisaur.central_moment([1,2,3,4],4) |> Float.round(4)
-  2.5625 
+  {:ok, 0.0}
+  iex>with {:ok, moment} <- Statisaur.central_moment([1,2,3,4],4), do: Float.round(moment, 4)
+  2.5625
   """
   def central_moment(list, k) when is_list(list) and length(list) > 1 do
-    count = length(list)
-    mu = mean(list)
-    (list |> powered_error(mu, k) |> Enum.sum) / count
+    with count <- length(list),
+         {:ok, mu} <- mean(list),
+         {:ok, pe} <- powered_error(list, mu, k)
+      do
+        {:ok, Enum.sum(pe) / count}
+      else
+        {:error, reason} ->
+          {:error, reason}
+      end
+    # count = length(list)
+    # mu = mean(list)
+    # (list |> powered_error(mu, k) |> Enum.sum) / count
+  end
+
+
+  @doc """
+  Same as `central_moment/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def central_moment!(list, k) do
+    case central_moment(list, k) do
+    {:ok, result} ->
+      result
+    {:error, reason} ->
+      raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """
