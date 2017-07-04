@@ -162,7 +162,7 @@ defmodule StatisaurTest do
   end
 
   test "central_moment returns an error tuple when given bad data" do
-    assert {:error, "argument must be list of numbers and an integer"} == Statisaur.central_moment(@bad_data, 8)
+    assert {:error, "argument must be list of numbers"} == Statisaur.central_moment(@bad_data, 8)
   end
 
   test "central_moment! raises an error when given bad data" do
