@@ -72,10 +72,15 @@ defmodule Statisaur.Combinatorics do
   """
   @spec n_choose_k(non_neg_integer, non_neg_integer) :: {:ok, non_neg_integer} | {:error, String.t}
   def n_choose_k(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
-    {:ok, fact_k} = factorial(k)
-    {:ok, fallen_fact} = falling_factorial(n, k)
-    response = div(fallen_fact, fact_k)
-    {:ok, response}
+    with {:ok, fact_k} <- factorial(k),
+         {:ok, fallen_fact} <- falling_factorial(n, k),
+         response <- div(fallen_fact, fact_k)
+      do
+        {:ok, response}
+      else
+        {:error, reason} ->
+          {:error, reason}
+    end
   end
 
   def n_choose_k(_n, _k) do
