@@ -416,9 +416,6 @@ defmodule Statisaur do
         {:error, reason} ->
           {:error, reason}
       end
-    # count = length(list)
-    # mu = mean(list)
-    # (list |> powered_error(mu, k) |> Enum.sum) / count
   end
 
   @doc """
