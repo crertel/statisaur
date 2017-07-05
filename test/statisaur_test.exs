@@ -193,4 +193,11 @@ defmodule StatisaurTest do
     assert_raise ArgumentError, fn -> Statisaur.kurtosis!(@bad_data) end
   end
 
+  test "coefficient_of_variation returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers"} == Statisaur.coefficient_of_variation(@bad_data)
+  end
+
+  test "coefficient_of_variation! raises an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.coefficient_of_variation!(@bad_data) end
+  end
 end

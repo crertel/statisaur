@@ -537,10 +537,32 @@ defmodule Statisaur do
   Calculates the coefficient of variation for a list of numbers.
 
   ###Examples
-  iex>Statisaur.coefficient_of_variation([1,2,3,4]) |> Float.round(4)
+  iex>with {:ok, result} <- Statisaur.coefficient_of_variation([1,2,3,4]), do: Float.round(result, 4)
   0.5164
   """
   def coefficient_of_variation(list) when is_list(list) and length(list) > 1 do
-    stddev(list) / mean(list)
+    with {:ok, dev} <- stddev(list),
+         {:ok, me } <- mean(list)
+    do 
+      {:ok, dev/me}
+    else
+      {:error, reason} ->
+        {:error, reason}
+     end
   end
+
+
+  @doc """
+  Same as `coefficient_of_variation/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def coefficient_of_variation!(list) do
+    case coefficient_of_variation(list) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
+  end
+
 end
