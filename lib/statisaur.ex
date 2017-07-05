@@ -480,10 +480,28 @@ defmodule Statisaur do
 
   ###Examples
   iex>Statisaur.skewness([1,2,3,4])
-  0.0
+  {:ok, 0.0}
   """
   def skewness(list) when is_list(list) and length(list) > 1  do    
-    standardized_moment(list,3)
+    case standardized_moment(list,3) do
+      {:ok, result} ->
+        {:ok, result}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Same as `skewness/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def skewness!(list) do    
+    case standardized_moment(list,3) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+       raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """
