@@ -177,12 +177,20 @@ defmodule StatisaurTest do
     assert_raise ArgumentError, fn -> Statisaur.standardized_moment!(@bad_data, 8) end
   end
 
-    test "skewness returns an error tuple when given bad data" do
+  test "skewness returns an error tuple when given bad data" do
     assert {:error, "argument must be list of numbers and an integer"} == Statisaur.skewness(@bad_data)
   end
 
   test "skewness! raises an error when given bad data" do
     assert_raise ArgumentError, fn -> Statisaur.skewness!(@bad_data) end
+  end
+
+  test "kurtosis returns an error tuple when given bad data" do
+    assert {:error, "argument must be list of numbers and an integer"} == Statisaur.kurtosis(@bad_data)
+  end
+
+  test "kurtosis! raises an error when given bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.kurtosis!(@bad_data) end
   end
 
 end

@@ -509,10 +509,28 @@ defmodule Statisaur do
 
   ###Examples
   iex>Statisaur.kurtosis([1,2,3,4])
-  1.64
+  {:ok, 1.64}
   """
   def kurtosis(list) when is_list(list) and length(list) > 1  do    
-    standardized_moment(list,4)
+    case standardized_moment(list,4) do
+      {:ok, result} ->
+        {:ok, result}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Same as `kurtosis/1`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def kurtosis!(list) when is_list(list) and length(list) > 1  do    
+    case standardized_moment(list,4) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """
