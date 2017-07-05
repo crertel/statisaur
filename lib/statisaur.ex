@@ -327,10 +327,10 @@ defmodule Statisaur do
   Calculates the standard deviation from a list of numbers.
 
   ### Examples
-  iex>Statisaur.stddev([1,3,5,7,9]) |> Float.round(6)
-  {:ok, 3.162278}
-  iex>Statisaur.stddev([0.1,0.2,0.6]) |> Float.round(6)
-  {:ok, 0.264575}
+  iex>with {:ok, result} <- Statisaur.stddev([1,3,5,7,9]), do: Float.round(result, 6)
+  3.162278
+  iex>with {:ok, result} <- Statisaur.stddev([0.1,0.2,0.6]), do: Float.round(result, 6)
+  0.264575
   """
   def stddev(list) when is_list(list) and length(list) > 1 do
     with {:ok, var} <- variance(list),
