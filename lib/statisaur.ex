@@ -381,7 +381,7 @@ defmodule Statisaur do
 
 
   @doc """
-  Same as `raw_moment/1`, but but returns the response directly, or 
+  Same as `raw_moment/2`, but but returns the response directly, or 
   throws `ArgumentError` if an error is returned.
   """
   def raw_moment!(list, k) do
@@ -422,7 +422,7 @@ defmodule Statisaur do
   end
 
   @doc """
-  Same as `central_moment/1`, but but returns the response directly, or 
+  Same as `central_moment/2`, but but returns the response directly, or 
   throws `ArgumentError` if an error is returned.
   """
   def central_moment!(list, k) do
@@ -463,7 +463,7 @@ defmodule Statisaur do
   end
 
   @doc """
-  Same as `standardized_moment/1`, but but returns the response directly, or 
+  Same as `standardized_moment/2`, but but returns the response directly, or 
   throws `ArgumentError` if an error is returned.
   """
   def standardized_moment!(list, k) do
