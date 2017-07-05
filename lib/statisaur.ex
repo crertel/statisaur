@@ -279,13 +279,29 @@ defmodule Statisaur do
   """
   def powered_error(list = [number | _tail], reference, k) when is_list(list) and length(list) > 1 and is_number(number)
     and is_number(reference) and is_number(k) do
-    result = 
-    list |> Enum.map( fn(x) -> :math.pow( x - reference, k) end )
-    {:ok, result}
+    try do
+      result = list |> Enum.map( fn(x) -> :math.pow( x - reference, k) end )
+      {:ok, result}
+    rescue
+      ArgumentError -> {:error, "argument must be nonempty list of numbers, a number, and a number"}
+    end
   end
 
   def powered_error(_list, _ref, _k) do
     {:error, "argument must be nonempty list of numbers, a number, and a number"}
+  end
+
+  @doc """
+  Same as `powered_error/3`, but but returns the response directly, or 
+  throws `ArgumentError` if an error is returned.
+  """
+  def powered_error!(list, ref, k) do
+    case powered_error(list, ref, k) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise ArgumentError, "#{reason}"
+    end
   end
 
   @doc """

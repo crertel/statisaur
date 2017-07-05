@@ -105,6 +105,15 @@ defmodule StatisaurTest do
     assert_raise ArgumentError, fn -> Statisaur.median!(@bad_data) end
   end
 
+  test "powered_error returns error tuple with bad data" do
+    assert {:error, "argument must be nonempty list of numbers, a number, and a number"} 
+      == Statisaur.powered_error(@bad_data, 2, 1)
+  end
+
+  test "powered_error! raises an error with bad data" do
+    assert_raise ArgumentError, fn -> Statisaur.powered_error!(@bad_data, 2, 1) end
+  end
+
   test "variance([0.1,0.2,0.6]) returns 0.06999999999999999" do
     assert {:ok, 0.06999999999999999} == Statisaur.variance([0.1,0.2,0.6])
   end
