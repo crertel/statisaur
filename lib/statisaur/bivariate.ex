@@ -98,7 +98,7 @@ defmodule Statisaur.Bivariate do
   ** (ArgumentError) arguments have insufficient degrees of freedom
 
   iex> Statisaur.Bivariate.pooled_stddev([2,3,12], [40,44,48,54,60,32])
-  12.0
+  80.0
 
   """
   def pooled_stddev( list1, list2 )
