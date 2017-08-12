@@ -167,10 +167,10 @@ defmodule Statisaur.Bivariate do
     n1 = length(list1)
     n2 = length(list2)
     
-    stderrx = :Math.sqrt(v1/n1)
-    stderry = :Math.sqrt(v2/n2)
+    stderrx = :math.sqrt(v1/n1)
+    stderry = :math.sqrt(v2/n2)
 
-    Math.sqrt(:Math.pow(stderrx, 2) + :Math.pow(stderry, 2))
+    :math.sqrt(:math.pow(stderrx, 2) + :math.pow(stderry, 2))
   end
 
 
@@ -208,8 +208,6 @@ defmodule Statisaur.Bivariate do
   def t_score(list1, list2) do
     mu1 = Statisaur.mean(list1)
     mu2 = Statisaur.mean(list2)
-    n1 = length(list1)
-    n2 = length(list2)
     std_err = pooled_stderr(list1, list2)
 
     (mu1 - mu2)/ ( std_err )
