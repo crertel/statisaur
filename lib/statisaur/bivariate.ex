@@ -188,7 +188,7 @@ defmodule Statisaur.Bivariate do
   ** (ArgumentError) arguments have insufficient degrees of freedom
 
   iex> Statisaur.Bivariate.t_score([2,3,12], [40,44,48,54,60,32]) |> Float.round(3)
-  -1.298
+  -7.862
 
   """
   def t_score( list1, list2 )
@@ -210,10 +210,8 @@ defmodule Statisaur.Bivariate do
     mu2 = Statisaur.mean(list2)
     n1 = length(list1)
     n2 = length(list2)
-    #muAll = ( mu1*n1 + mu2*n2 ) / (n1+n2)
-    muAll = Statisaur.mean(list1 ++ list2)
-    s_squared = pooled_stddev(list1,list2)
+    std_err = pooled_stderr(list1, list2)
 
-    ((mu1 - mu2) - muAll)/ ( s_squared *:math.sqrt( (1/n1) + (1/n2) ) )
+    (mu1 - mu2)/ ( std_err )
   end
 end
