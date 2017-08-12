@@ -167,8 +167,8 @@ defmodule Statisaur.Bivariate do
     n1 = length(list1)
     n2 = length(list2)
     
-    stderrx <- :Math.sqrt(v1/n1)
-    stderry <- :Math.sqrt(v2/n2)
+    stderrx = :Math.sqrt(v1/n1)
+    stderry = :Math.sqrt(v2/n2)
 
     Math.sqrt(:Math.pow(stderrx, 2) + :Math.pow(stderry, 2))
   end
