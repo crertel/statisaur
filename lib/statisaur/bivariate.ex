@@ -130,6 +130,51 @@ defmodule Statisaur.Bivariate do
   end
 
   @doc """
+  Finds the pooled (weighted) std. error of two samples.
+
+  # Examples
+  iex> Statisaur.Bivariate.pooled_stderr(0.5, 4)
+  ** (ArgumentError) arguments must both be lists
+  iex> Statisaur.Bivariate.pooled_stderr([], [])
+  ** (ArgumentError) arguments must be non-empty lists
+
+  iex> Statisaur.Bivariate.pooled_stderr([2], [4])
+  ** (ArgumentError) arguments have insufficient degrees of freedom
+
+  iex> Statisaur.Bivariate.pooled_stderr([2,3,12], [40,44,48,54,60,32])
+  5.172577
+
+  """
+  def pooled_stderr( list1, list2 )
+  when is_list(list1) == false or is_list(list2) == false do
+    raise ArgumentError, "arguments must both be lists"
+  end  
+  def pooled_stderr( list1, list2 )
+  when is_list(list1) and is_list(list2)
+       and (length(list1) < 1 or length(list2) < 1) do
+    raise ArgumentError, "arguments must be non-empty lists"
+  end
+  def pooled_stderr( list1, list2 )
+  when is_list(list1) and is_list(list2)
+       and (length(list1) + length(list2) < 3) do
+    raise ArgumentError, "arguments have insufficient degrees of freedom"
+  end
+  def pooled_stderr( list1, list2 )
+  when is_list(list1) and is_list(list2) and
+       length(list1) > 0 and length(list2) > 0 do
+    v1 = Statisaur.variance(list1)
+    v2 = Statisaur.variance(list2)
+    n1 = length(list1)
+    n2 = length(list2)
+    
+    stderrx <- :Math.sqrt(v1/n1)
+    stderry <- :Math.sqrt(v2/n2)
+
+    Math.sqrt(:Math.pow(stderrx, 2) + :Math.pow(stderry, 2))
+  end
+
+
+  @doc """
   Function to find the t-score of two samples.
 
   # Examples
