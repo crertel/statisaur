@@ -84,7 +84,7 @@ defmodule Statisaur do
   @doc """
   Calculate the frequency counts of distinct elements.
 
-  ### Examaples
+  ### Examples
   iex>Statisaur.frequencies([1])
   [{1,1}]
   iex>Statisaur.frequencies([1,2,2,3])
