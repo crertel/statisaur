@@ -44,24 +44,6 @@ defmodule Statisaur.Bivariate do
 	end
 
   @doc """
-  Finds the covariance between two lists
-
-  ### Examples
-  iex>Statisaur.Bivariate.covariance([1,3,5,7,9],[10,20,30,40,50])
-  50.0
-
-  """
-  def covariance(list1, list2) when is_list(list1) and is_list(list2) and length(list1) == length(list2) do
-    n = length(list1)
-    mu_x = Statisaur.mean(list1)
-    mu_y = Statisaur.mean(list2)
-    numerator = Enum.zip(list1, list2) |>
-    Enum.map( fn {x, y} -> (x - mu_x) * (y + mu_y) end ) |> 
-    Enum.sum()
-    numerator/(n - 1)
-  end
-
-  @doc """
   Finds the Pearson correlation of two lists, provided they are of equal length.
 
   ### Examples
@@ -100,5 +82,50 @@ defmodule Statisaur.Bivariate do
       0 -> raise ArithmeticError, "std. deviation of one or both inputs is 0"
       _ -> covXY / (sigmaX * sigmaY)
     end
+  end
+
+  @doc """
+  Finds the pooled (weighted) std. dev. of two samples.
+
+  # Examples
+  iex> Statisaur.Bivariate.pooled_stddev(0.5, 4)
+  ** (ArgumentError) arguments must both be lists
+
+  iex> Statisaur.Bivariate.pooled_stddev([], [])
+  ** (ArgumentError) arguments must be non-empty lists
+
+  iex> Statisaur.Bivariate.pooled_stddev([2], [4])
+  ** (ArgumentError) arguments have insufficient degrees of freedom
+
+  iex> Statisaur.Bivariate.pooled_stddev([2,3,12], [40,44,48,54,60,32])
+  12.0
+
+  """
+  def pooled_stddev( list1, list2 )
+  when is_list(list1) == false or is_list(list2) == false do
+    raise ArgumentError, "arguments must both be lists"
+  end  
+  def pooled_stddev( list1, list2 )
+  when is_list(list1) and is_list(list2)
+       and (length(list1) < 1 or length(list2) < 1) do
+    raise ArgumentError, "arguments must be non-empty lists"
+  end
+  def pooled_stddev( list1, list2 )
+  when is_list(list1) and is_list(list2)
+       and (length(list1) + length(list2) < 3) do
+    raise ArgumentError, "arguments have insufficient degrees of freedom"
+  end
+  def pooled_stddev( list1, list2 )
+  when is_list(list1) and is_list(list2) and
+       length(list1) > 0 and length(list2) > 0 do
+    mu1 = Statisaur.mean(list1)
+    mu2 = Statisaur.mean(list2)
+    err_list1 = Statisaur.powered_error(list1, mu1, 2)
+    err_list2 = Statisaur.powered_error(list2, mu2, 2)
+
+    sum_err_1 = Statisaur.sum(err_list1)
+    sum_err_2 = Statisaur.sum(err_list2)
+
+    (sum_err_1 + sum_err_2) / ( length(list1) + length(list2) - 2)
   end
 end
