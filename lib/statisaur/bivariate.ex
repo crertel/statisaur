@@ -31,14 +31,14 @@ defmodule Statisaur.Bivariate do
 	{2, {21.244330227661493, 0.08711964265011925}}
 	"""
 	def simple_linear_regression(list1,list2) do
-		m1 = mean(list1)
-		m2 = mean(list2)
-		b1_num_p1 = powered_error(list1, m1, 1)
-		b1_num_p2 = powered_error(list2, m2, 1)
-		b1_num = sum(Enum.map(Enum.zip(b1_num_p1, b1_num_p2), fn({x, y})-> x*y end))
-		b1_denom = sum(powered_error(list1, m1, 2))
+		m1 = Statisaur.mean(list1)
+		m2 = Statisaur.mean(list2)
+		b1_num_p1 = Statisaur.powered_error(list1, m1, 1)
+		b1_num_p2 = Statisaur.powered_error(list2, m2, 1)
+		b1_num = Statisaur.sum(Enum.map(Enum.zip(b1_num_p1, b1_num_p2), fn({x, y})-> x*y end))
+		b1_denom = Statisaur.sum( Statisaur.powered_error(list1, m1, 2))
 		b1 = b1_num/b1_denom
-		b0 = mean(list2) - b1 * mean(list1)
+		b0 = Statisaur.mean(list2) - b1 * Statisaur.mean(list1)
 		b1 = b1
 		{2, {b0, b1}}
 	end
