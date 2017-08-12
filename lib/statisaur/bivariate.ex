@@ -135,13 +135,14 @@ defmodule Statisaur.Bivariate do
   # Examples
   iex> Statisaur.Bivariate.pooled_stderr(0.5, 4)
   ** (ArgumentError) arguments must both be lists
+
   iex> Statisaur.Bivariate.pooled_stderr([], [])
   ** (ArgumentError) arguments must be non-empty lists
 
   iex> Statisaur.Bivariate.pooled_stderr([2], [4])
   ** (ArgumentError) arguments have insufficient degrees of freedom
 
-  iex> Statisaur.Bivariate.pooled_stderr([2,3,12], [40,44,48,54,60,32])
+  iex> Statisaur.Bivariate.pooled_stderr([2,3,12], [40,44,48,54,60,32]) |> Float.round(6)
   5.172577
 
   """
