@@ -128,4 +128,24 @@ defmodule Statisaur.Bivariate do
 
     (sum_err_1 + sum_err_2) / ( length(list1) + length(list2) - 2)
   end
+
+  @doc """
+  Function to find the t-score of two samples.
+
+  # Examples
+  iex> Statisaur.Bivariate.t_score([2,3,12], [40,44,48,54,60,32]) |> Float.round(3)
+  -1.298
+
+  """
+  def t_score(list1, list2) do
+    mu1 = Statisaur.mean(list1)
+    mu2 = Statisaur.mean(list2)
+    n1 = length(list1)
+    n2 = length(list2)
+    #muAll = ( mu1*n1 + mu2*n2 ) / (n1+n2)
+    muAll = Statisaur.mean(list1 ++ list2)
+    s_squared = pooled_stddev(list1,list2)
+
+    ((mu1 - mu2) - muAll)/ ( s_squared *:math.sqrt( (1/n1) + (1/n2) ) )
+  end
 end
