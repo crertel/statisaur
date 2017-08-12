@@ -133,10 +133,33 @@ defmodule Statisaur.Bivariate do
   Function to find the t-score of two samples.
 
   # Examples
+  iex> Statisaur.Bivariate.t_score(0.5, 4)
+  ** (ArgumentError) arguments must both be lists
+
+  iex> Statisaur.Bivariate.t_score([], [])
+  ** (ArgumentError) arguments must be non-empty lists
+
+  iex> Statisaur.Bivariate.t_score([2], [4])
+  ** (ArgumentError) arguments have insufficient degrees of freedom
+
   iex> Statisaur.Bivariate.t_score([2,3,12], [40,44,48,54,60,32]) |> Float.round(3)
   -1.298
 
   """
+  def t_score( list1, list2 )
+  when is_list(list1) == false or is_list(list2) == false do
+    raise ArgumentError, "arguments must both be lists"
+  end  
+  def t_score( list1, list2 )
+  when is_list(list1) and is_list(list2)
+       and (length(list1) < 1 or length(list2) < 1) do
+    raise ArgumentError, "arguments must be non-empty lists"
+  end
+  def t_score( list1, list2 )
+  when is_list(list1) and is_list(list2)
+       and (length(list1) + length(list2) < 3) do
+    raise ArgumentError, "arguments have insufficient degrees of freedom"
+  end
   def t_score(list1, list2) do
     mu1 = Statisaur.mean(list1)
     mu2 = Statisaur.mean(list2)
