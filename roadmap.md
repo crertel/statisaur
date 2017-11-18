@@ -23,9 +23,10 @@
 
 ## Bivariate statistics
 
-- [ ] t test
-- [ ] pearsons correlation
-- [ ] linear regression
+- [x] covariance
+- [x] t test
+- [x] pearsons correlation
+- [x] linear regression
 
 ## Nonparametric statistics
 
