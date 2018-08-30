@@ -13,8 +13,8 @@ defmodule Statisaur.Bivariate do
 	"""
 	def covariance(list1, list2) when is_list(list1) and is_list(list2) and length(list1) == length(list2) do
 		n = length(list1)
-		mu_x = Statisaur.mean(list1)
-		mu_y = Statisaur.mean(list2)
+		{:ok, mu_x} = Statisaur.mean(list1)
+		{:ok, mu_y} = Statisaur.mean(list2)
 		numerator = Enum.zip(list1, list2) |>
 		Enum.map( fn {x, y} -> (x - mu_x) * (y + mu_y) end ) |> 
 		Enum.sum()
@@ -31,14 +31,15 @@ defmodule Statisaur.Bivariate do
 	{2, {21.244330227661493, 0.08711964265011925}}
 	"""
 	def simple_linear_regression(list1,list2) do
-		m1 = Statisaur.mean(list1)
-		m2 = Statisaur.mean(list2)
-		b1_num_p1 = Statisaur.powered_error(list1, m1, 1)
-		b1_num_p2 = Statisaur.powered_error(list2, m2, 1)
-		b1_num = Statisaur.sum(Enum.map(Enum.zip(b1_num_p1, b1_num_p2), fn({x, y})-> x*y end))
-		b1_denom = Statisaur.sum( Statisaur.powered_error(list1, m1, 2))
+		{:ok, m1} = Statisaur.mean(list1)
+		{:ok, m2} = Statisaur.mean(list2)
+		{:ok, b1_num_p1} = Statisaur.powered_error(list1, m1, 1)
+		{:ok, b1_num_p2} = Statisaur.powered_error(list2, m2, 1)
+		{:ok, b1_num} = Statisaur.sum(Enum.map(Enum.zip(b1_num_p1, b1_num_p2), fn({x, y})-> x*y end))
+    {:ok, list1_err} = Statisaur.powered_error(list1, m1, 2)
+		{:ok, b1_denom} = Statisaur.sum( list1_err )
 		b1 = b1_num/b1_denom
-		b0 = Statisaur.mean(list2) - b1 * Statisaur.mean(list1)
+		b0 = m2 - b1 * m1
 		b1 = b1
 		{2, {b0, b1}}
 	end
@@ -73,8 +74,8 @@ defmodule Statisaur.Bivariate do
   end
   def pearson_correlation(list1, list2) when is_list(list1) and is_list(list2) and length(list1) != 0 and length(list2)!=0 and length(list1) == length(list2) do
     covXY = covariance(list1, list2)
-    sigmaX = Statisaur.stddev(list1)
-    sigmaY = Statisaur.stddev(list2)
+    {:ok, sigmaX} = Statisaur.stddev(list1)
+    {:ok, sigmaY} = Statisaur.stddev(list2)
 
     # check that the std. deviations are nonzero
 
@@ -118,13 +119,13 @@ defmodule Statisaur.Bivariate do
   def pooled_stddev( list1, list2 )
   when is_list(list1) and is_list(list2) and
        length(list1) > 0 and length(list2) > 0 do
-    mu1 = Statisaur.mean(list1)
-    mu2 = Statisaur.mean(list2)
-    err_list1 = Statisaur.powered_error(list1, mu1, 2)
-    err_list2 = Statisaur.powered_error(list2, mu2, 2)
+    {:ok, mu1} = Statisaur.mean(list1)
+    {:ok, mu2} = Statisaur.mean(list2)
+    {:ok, err_list1} = Statisaur.powered_error(list1, mu1, 2)
+    {:ok, err_list2} = Statisaur.powered_error(list2, mu2, 2)
 
-    sum_err_1 = Statisaur.sum(err_list1)
-    sum_err_2 = Statisaur.sum(err_list2)
+    {:ok, sum_err_1} = Statisaur.sum(err_list1)
+    {:ok, sum_err_2} = Statisaur.sum(err_list2)
 
     (sum_err_1 + sum_err_2) / ( length(list1) + length(list2) - 2)
   end
@@ -163,8 +164,8 @@ defmodule Statisaur.Bivariate do
   def pooled_stderr( list1, list2 )
   when is_list(list1) and is_list(list2) and
        length(list1) > 0 and length(list2) > 0 do
-    v1 = Statisaur.variance(list1)
-    v2 = Statisaur.variance(list2)
+    {:ok, v1} = Statisaur.variance(list1)
+    {:ok, v2} = Statisaur.variance(list2)
     n1 = length(list1)
     n2 = length(list2)
     
@@ -207,8 +208,8 @@ defmodule Statisaur.Bivariate do
     raise ArgumentError, "arguments have insufficient degrees of freedom"
   end
   def t_score(list1, list2) do
-    mu1 = Statisaur.mean(list1)
-    mu2 = Statisaur.mean(list2)
+    {:ok, mu1} = Statisaur.mean(list1)
+    {:ok, mu2} = Statisaur.mean(list2)
     std_err = pooled_stderr(list1, list2)
 
     (mu1 - mu2)/ ( std_err )
