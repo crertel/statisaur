@@ -2,6 +2,7 @@
 Elixir library for doing univariate statistics and certain analyses.
 
 [![Build Status](https://api.travis-ci.org/repositories/hawthornehaus/statisaur.svg)](https://travis-ci.org/hawthornehaus/statisaur)
+[![CircleCI](https://circleci.com/gh/hawthornehaus/statisaur.svg?style=svg)](https://circleci.com/gh/hawthornehaus/statisaur)
 [![Inline docs](http://inch-ci.org/github/hawthornehaus/statisaur.svg)](http://inch-ci.org/github/hawthornehaus/statisaur)
 [![hex.pm version](https://img.shields.io/hexpm/v/statisaur.svg)](https://hex.pm/packages/statisaur)
 [![hex.pm downloads](https://img.shields.io/hexpm/dt/statisaur.svg)](https://hex.pm/packages/statisaur)
