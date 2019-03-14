@@ -33,7 +33,7 @@ defmodule Statisaur.Mixfile do
       links: %{"GitHub" => "https://github.com/hawthornehaus/statisaur"}
     ]
   end
-  
+
   defp description() do
     """
     Statisaur is a simple library for doing univariate and descriptive statistics.
@@ -44,10 +44,10 @@ defmodule Statisaur.Mixfile do
 
   defp deps() do
     [
-        {:earmark, "~> 0.1", only: :dev },
-        {:ex_doc, "~> 0.6", only: :dev},
-        {:excoveralls, "~> 0.6", only: :dev},
-        {:inch_ex, "~> 0.2",  only: :docs}
+        {:earmark, "~> 1.3.1", only: :dev },
+        {:ex_doc, "~> 0.19.3", only: :dev},
+        {:excoveralls, "~> 0.10.6", only: :dev},
+        {:inch_ex, "~> 2.0.0",  only: :docs}
     ]
   end
 
