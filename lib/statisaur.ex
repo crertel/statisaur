@@ -4,7 +4,7 @@ defmodule Statisaur do
   This module currently contains the functions for
   summary statistics.
   """
-  
+
   @doc """
   Calculate the smallest value from a list of numbers.
 
@@ -17,6 +17,7 @@ defmodule Statisaur do
   def min(list) when is_list(list) and length(list) > 1 do
     Enum.min(list)
   end
+  def min(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate the largest value from a list of numbers.
@@ -29,6 +30,7 @@ defmodule Statisaur do
   def max(list) when is_list(list) and length(list) > 1 do
     Enum.max(list)
   end
+  def max(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate the sum from a list of numbers
@@ -42,7 +44,8 @@ defmodule Statisaur do
   1.0
 
   """
-  def sum(list) when is_list(list), do: Enum.sum(list)
+  def sum(list) when is_list(list) and length(list) > 0, do: Enum.sum(list)
+  def sum(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate the mean from a list of numbers
@@ -54,7 +57,8 @@ defmodule Statisaur do
   0.3
 
   """
-  def mean(list) when is_list(list), do: sum(list)/length(list)
+  def mean(list) when is_list(list) and length(list) > 1, do: sum(list)/length(list)
+  def mean(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate the median from a list of numbers
@@ -74,12 +78,13 @@ defmodule Statisaur do
     pivot = round(n/2)
 
     case rem(n,2)  do
-      0 -> a = sorted |> Enum.at(pivot) 
-           b = sorted |> Enum.at(pivot - 1) 
+      0 -> a = sorted |> Enum.at(pivot)
+           b = sorted |> Enum.at(pivot - 1)
            (a+b)/2 # median for an even-sized set is the mean of the middle numbers
       _ -> sorted |> Enum.at(round(Float.floor(n/2))) # this seems weird, but Float floor yields float not int :()
     end
   end
+  def median(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate the frequency counts of distinct elements.
@@ -90,12 +95,13 @@ defmodule Statisaur do
   iex>Statisaur.frequencies([1,2,2,3])
   [{1,1},{2,2},{3,1}]
   """
-  def frequencies(list) when is_list(list) do
+  def frequencies(list) when is_list(list) and length(list) > 0 do
     sorted = list |> Enum.sort
     vals = sorted |> Enum.uniq
     freqs = vals |> Enum.map( fn(v) -> Enum.count(sorted, fn(x)-> x == v end) end)
     Enum.zip(vals,freqs)
   end
+  def frequencies(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate most commonly occurring number from a list of numbers
@@ -112,6 +118,7 @@ defmodule Statisaur do
     {_, mode_guess} = sorted_freqs |> Enum.at(0)
     sorted_freqs |> Enum.filter( fn({_,f})-> f >= mode_guess end) |> Enum.map( fn({v,_})->v end)
   end
+  def mode(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Create an element-wise kth-power of a list compared to a reference value.
@@ -123,6 +130,7 @@ defmodule Statisaur do
   def powered_error( list, reference, k) when is_list(list) and length(list) > 1 do
     list |> Enum.map( fn(x) -> :math.pow( x - reference, k) end )
   end
+  def powered_error(_,_,_), do: raise ArgumentError, "must be supplied a non-zero length list"
 
   @doc """
   Calculate the variance from a list of numbers
@@ -135,11 +143,13 @@ defmodule Statisaur do
 
   """
   def variance(list) when is_list(list) and length(list) > 1 do
-    mu = mean(list)    
+    mu = mean(list)
     diffmeans = list |> powered_error( mu, 2 ) |> Enum.sum
     df = length(list) - 1
     diffmeans/df
   end
+  def variance(_list), do: raise ArgumentError, "argument must be non-zero length list"
+
 
   @doc """
   Calculates the standard deviation from a list of numbers.
@@ -153,6 +163,7 @@ defmodule Statisaur do
   def stddev(list) when is_list(list) and length(list) > 1 do
     list |> variance |> :math.sqrt
   end
+  def stddev(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculate the kth moment with respect to the origin of a list of numbers.
@@ -168,9 +179,10 @@ defmodule Statisaur do
   88.5
   """
   def raw_moment(list, k) when is_list(list) and length(list) > 1 do
-    count = length(list)  
+    count = length(list)
     (list |> Enum.map( fn(x) -> :math.pow( x, k) end ) |> Enum.sum) / count
   end
+  def mode(_list,_), do: raise ArgumentError, "must be supplied a non-zero length list"
 
   @doc """
   Calculate the kth central moment of a list of numbers.
@@ -183,13 +195,14 @@ defmodule Statisaur do
   iex>Statisaur.central_moment([1,2,3,4],3)
   0.0
   iex>Statisaur.central_moment([1,2,3,4],4) |> Float.round(4)
-  2.5625 
+  2.5625
   """
   def central_moment(list, k) when is_list(list) and length(list) > 1 do
     count = length(list)
     mu = mean(list)
     (list |> powered_error(mu, k) |> Enum.sum) / count
   end
+  def central_moment(_list, _), do: raise ArgumentError, "must be supplied a non-zero length list"
 
   @doc """
   Calculate the kth standardized moment of a list of numbers. See [here](https://en.wikipedia.org/wiki/Standardized_moment) for definition.
@@ -204,12 +217,13 @@ defmodule Statisaur do
   iex>Statisaur.standardized_moment([1,2,3,4],4)
   1.64
   """
-  def standardized_moment(list, k) when is_list(list) and length(list) > 1 do            
+  def standardized_moment(list, k) when is_list(list) and length(list) > 1 do
     m1 = raw_moment(list,1)
     num = (powered_error(list, m1, k) |> Enum.sum) / length(list)
     denom = :math.pow( (powered_error(list, m1, 2) |> Enum.sum)/length(list), k/2)
     num/denom
   end
+  def standardized_moment(_list, _), do: raise ArgumentError, "must be supplied a non-zero length list"
 
   @doc """
   Calculates the skewness (3rd standardized moment) of a list of numbers.
@@ -218,9 +232,10 @@ defmodule Statisaur do
   iex>Statisaur.skewness([1,2,3,4])
   0.0
   """
-  def skewness(list) when is_list(list) and length(list) > 1  do    
+  def skewness(list) when is_list(list) and length(list) > 1  do
     standardized_moment(list,3)
   end
+  def skewness(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculates the kurtosis (4th standardized moment) of a list of numbers.
@@ -229,9 +244,10 @@ defmodule Statisaur do
   iex>Statisaur.kurtosis([1,2,3,4])
   1.64
   """
-  def kurtosis(list) when is_list(list) and length(list) > 1  do    
+  def kurtosis(list) when is_list(list) and length(list) > 1  do
     standardized_moment(list,4)
   end
+  def kurtosis(_list), do: raise ArgumentError, "argument must be non-zero length list"
 
   @doc """
   Calculates the coefficient of variation for a list of numbers.
@@ -243,4 +259,5 @@ defmodule Statisaur do
   def coefficient_of_variation(list) when is_list(list) and length(list) > 1 do
     stddev(list) / mean(list)
   end
+  def coefficient_of_variance(_list), do: raise ArgumentError, "argument must be non-zero length list"
 end
