@@ -44,7 +44,7 @@ defmodule Statisaur.Mixfile do
 
   defp deps() do
     [
-        {:earmark, "~> 1.3.1", only: :dev },
+        {:earmark, "~> 1.3.1", only: [:dev, :docs] },
         {:ex_doc, "~> 0.19.3", only: [:dev, :docs]},
         {:excoveralls, "~> 0.10.0", only: [:test, :dev] },
         {:inch_ex, "~> 2.0.0",  only: :docs},
