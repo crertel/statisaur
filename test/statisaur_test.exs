@@ -1,4 +1,3 @@
-ExUnit.start()
 defmodule StatisaurTest do
   use ExUnit.Case
   doctest Statisaur
