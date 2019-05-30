@@ -1,12 +1,10 @@
 # statisaur
 Elixir library for doing univariate statistics and certain analyses.
 
-[![Build Status](https://api.travis-ci.org/repositories/hawthornehaus/statisaur.svg)](https://travis-ci.org/hawthornehaus/statisaur)
-[![CircleCI](https://circleci.com/gh/hawthornehaus/statisaur.svg?style=svg)](https://circleci.com/gh/hawthornehaus/statisaur)
-[![Inline docs](http://inch-ci.org/github/hawthornehaus/statisaur.svg)](http://inch-ci.org/github/hawthornehaus/statisaur)
+[![CircleCI](https://circleci.com/gh/crertel/statisaur/tree/master.svg?style=svg)](https://circleci.com/gh/crertel/statisaur/tree/master)
 [![hex.pm version](https://img.shields.io/hexpm/v/statisaur.svg)](https://hex.pm/packages/statisaur)
 [![hex.pm downloads](https://img.shields.io/hexpm/dt/statisaur.svg)](https://hex.pm/packages/statisaur)
-[![Coverage Status](https://coveralls.io/repos/hawthornehaus/statisaur/badge.svg?branch=master)](https://coveralls.io/r/hawthornehaus/statisaur?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/crertel/statisaur/badge.svg?branch=master)](https://coveralls.io/github/crertel/statisaur?branch=master)
 
 What is statisaur?
 ===================
