@@ -45,9 +45,10 @@ defmodule Statisaur.Mixfile do
   defp deps() do
     [
         {:earmark, "~> 1.3.1", only: :dev },
-        {:ex_doc, "~> 0.19.3", only: :dev},
-        {:excoveralls, "~> 0.10.6", only: :dev},
-        {:inch_ex, "~> 2.0.0",  only: :docs}
+        {:ex_doc, "~> 0.19.3", only: [:dev, :docs]},
+        {:excoveralls, "~> 0.10.0", only: [:test, :dev] },
+        {:inch_ex, "~> 2.0.0",  only: :docs},
+        {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
     ]
   end
 
