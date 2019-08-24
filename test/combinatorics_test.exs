@@ -8,7 +8,7 @@ defmodule CombinatoricsTest do
   end
 
   test "factorial 0 returns 1" do
-    assert Combinatorics.factorial(0) == 1 
+    assert Combinatorics.factorial(0) == 1
   end
 
   test "factorial raises an error with negative integers" do
@@ -36,11 +36,11 @@ defmodule CombinatoricsTest do
   end
 
   test "falling_factorial with first argument negative" do
-    assert Combinatorics.falling_factorial(-10, 5) == -240240
+    assert Combinatorics.falling_factorial(-10, 5) == -240_240
   end
 
   test "falling_factorial with second argument negative returns float between zero and one" do
-    assert Combinatorics.falling_factorial(4, -2) == 1/30
+    assert Combinatorics.falling_factorial(4, -2) == 1 / 30
   end
 
   test "falling_factorial with second argument as 0 returns 1" do

@@ -8,7 +8,7 @@ defmodule Statisaur.Combinatorics do
 
   The factorial of a non-negative integer n, is the product of all positive integers less than or equal to n.
   The value of factorial(0) is 1, according to the convention for an empty product.
-  
+
   ### Example
     The factorial of 5 is (5 * 4 * 3 * 2 * 1), or 120.
 
@@ -29,8 +29,8 @@ defmodule Statisaur.Combinatorics do
     1
   end
 
-  def factorial(n) when is_integer(n) and n > 0  do
-    Enum.reduce((1..n), 1, fn(x, acc) -> x * acc end)
+  def factorial(n) when is_integer(n) and n > 0 do
+    Enum.reduce(1..n, 1, fn x, acc -> x * acc end)
   end
 
   def factorial(_term) do
@@ -52,7 +52,7 @@ defmodule Statisaur.Combinatorics do
       125970
   """
   @spec n_choose_k(non_neg_integer, non_neg_integer) :: non_neg_integer
-  def n_choose_k(n, k) when (n >= k) and (k >= 0) and is_integer(n) and is_integer(k) do
+  def n_choose_k(n, k) when n >= k and k >= 0 and is_integer(n) and is_integer(k) do
     div(falling_factorial(n, k), factorial(k))
   end
 
@@ -105,17 +105,16 @@ defmodule Statisaur.Combinatorics do
 
   def falling_factorial(n, k) when is_integer(n) and is_integer(k) and k < 0 do
     m = abs(k)
-    1 / falling_factorial((n+m), m)
+    1 / falling_factorial(n + m, m)
   end
 
   def falling_factorial(n, k) when is_integer(n) and is_integer(k) do
-    Enum.reduce(n..(n-(k-1)), 1, fn(x, acc) -> x * acc end)
+    Enum.reduce(n..(n - (k - 1)), 1, fn x, acc -> x * acc end)
   end
 
   def falling_factorial(_n, _k) do
     raise ArgumentError, "arguments must be integers"
   end
-
 
   @doc ~S"""
   The rising factorial, also known as the 'rising sequential product' or 'Pochhammer polynomial',
@@ -144,11 +143,10 @@ defmodule Statisaur.Combinatorics do
   end
 
   def rising_factorial(n, k) when is_integer(n) and is_integer(k) do
-    Enum.reduce(n..(n+(k-1)), 1, fn(x, acc) -> x * acc end)
+    Enum.reduce(n..(n + (k - 1)), 1, fn x, acc -> x * acc end)
   end
 
   def rising_factorial(_n, _k) do
     raise ArgumentError, "arguments must be integers"
   end
-
 end

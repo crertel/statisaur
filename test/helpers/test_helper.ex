@@ -36,7 +36,7 @@ defmodule Statisaur.TestHelper do
   [[1, 2], [4, 3], [3, 1]]
   """
   def pluck_all(list, ncol, result) do
-    result = [pluck(list, ncol)|result]
+    result = [pluck(list, ncol) | result]
     pluck_all(list, ncol - 1, result)
   end
 
@@ -51,7 +51,7 @@ defmodule Statisaur.TestHelper do
     ncol = length(hd(list))
     pluck_all(list, ncol, [])
   end
-  
+
   @doc """
   Load csv
 
@@ -64,11 +64,12 @@ defmodule Statisaur.TestHelper do
   """
   def load_csv(file_path) when is_bitstring(file_path) do
     {:ok, contents} = File.read(file_path)
-    contents |>
-    String.split("\n") |>
-    Enum.filter( fn(x)-> (String.trim(x) |> String.length()) > 0 end ) |>
-    Enum.map(&String.split(&1, ",")) |> 
-    pluck_contents() |>
-    Enum.map(fn(x) -> {hd(x), tl(x)} end)
+
+    contents
+    |> String.split("\n")
+    |> Enum.filter(fn x -> String.trim(x) |> String.length() > 0 end)
+    |> Enum.map(&String.split(&1, ","))
+    |> pluck_contents()
+    |> Enum.map(fn x -> {hd(x), tl(x)} end)
   end
 end
