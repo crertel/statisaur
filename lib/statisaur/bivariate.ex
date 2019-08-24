@@ -16,7 +16,7 @@ defmodule Statisaur.Bivariate do
 		mu_x = Statisaur.mean(list1)
 		mu_y = Statisaur.mean(list2)
 		numerator = Enum.zip(list1, list2) |>
-		Enum.map( fn {x, y} -> (x - mu_x) * (y + mu_y) end ) |> 
+		Enum.map( fn {x, y} -> (x - mu_x) * (y + mu_y) end ) |>
 		Enum.sum()
 		numerator/(n - 1)
 	end
@@ -59,10 +59,10 @@ defmodule Statisaur.Bivariate do
   iex> Statisaur.Bivariate.pearson_correlation( [],[] )
   ** (ArgumentError) arguments must be non-zero length lists
 
-  ie> Statisaur.Bivariate.pearson_correlation( [1,2,3], [4,5] )
+  iex> Statisaur.Bivariate.pearson_correlation( [1,2,3], [4,5] )
   ** (ArgumentError) arguments must be identical length lists
 
-  ie> Statisaur.Bivariate.pearson_correlation( [1,1], [1,3] )
+  iex> Statisaur.Bivariate.pearson_correlation( [1,1], [1,3] )
   ** (ArithmeticError) std. deviation of one or both inputs is 0
   """
   def pearson_correlation(list1, list2) when is_list(list1) and is_list(list2) and (length(list1) == 0 or length(list2) == 0 ) do
@@ -78,9 +78,12 @@ defmodule Statisaur.Bivariate do
 
     # check that the std. deviations are nonzero
 
-    case sigmaX*sigmaY do
-      0 -> raise ArithmeticError, "std. deviation of one or both inputs is 0"
-      _ -> covXY / (sigmaX * sigmaY)
+    denom = sigmaX * sigmaY
+
+    if denom < 1.0e-10 do
+      raise ArithmeticError, "std. deviation of one or both inputs is 0"
+    else
+      covXY / (sigmaX * sigmaY)
     end
   end
 
@@ -104,7 +107,7 @@ defmodule Statisaur.Bivariate do
   def pooled_stddev( list1, list2 )
   when is_list(list1) == false or is_list(list2) == false do
     raise ArgumentError, "arguments must both be lists"
-  end  
+  end
   def pooled_stddev( list1, list2 )
   when is_list(list1) and is_list(list2)
        and (length(list1) < 1 or length(list2) < 1) do
@@ -149,7 +152,7 @@ defmodule Statisaur.Bivariate do
   def pooled_stderr( list1, list2 )
   when is_list(list1) == false or is_list(list2) == false do
     raise ArgumentError, "arguments must both be lists"
-  end  
+  end
   def pooled_stderr( list1, list2 )
   when is_list(list1) and is_list(list2)
        and (length(list1) < 1 or length(list2) < 1) do
@@ -167,7 +170,7 @@ defmodule Statisaur.Bivariate do
     v2 = Statisaur.variance(list2)
     n1 = length(list1)
     n2 = length(list2)
-    
+
     stderrx = :math.sqrt(v1/n1)
     stderry = :math.sqrt(v2/n2)
 
@@ -195,7 +198,7 @@ defmodule Statisaur.Bivariate do
   def t_score( list1, list2 )
   when is_list(list1) == false or is_list(list2) == false do
     raise ArgumentError, "arguments must both be lists"
-  end  
+  end
   def t_score( list1, list2 )
   when is_list(list1) and is_list(list2)
        and (length(list1) < 1 or length(list2) < 1) do

@@ -2,6 +2,7 @@ defmodule StatisaurTest do
   use ExUnit.Case
   doctest Statisaur
   doctest Statisaur.Bivariate
+  doctest Statisaur.TestHelper
 
   @large Enum.to_list(1..10000)
   @eps 1.0e-4
