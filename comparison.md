@@ -1,37 +1,40 @@
-# Options
+# Other Elixir statistics libraries
 
 |                                  | [Numerix](https://github.com/safwank/Numerix) | [Bear](https://github.com/folsom-project/bear)   | [Elixir Statistics](https://github.com/msharp/elixir-statistics) |
 |----------------------------------|---------|--------|-------------------|
 | **Univariate statistics**        |         |        |                   |
-|                                  |         |        |                   |
-| Max                              |         |  x     |                   |
-| Min                              |         |  x     |                   |
-| Mean                             |   x     |        |                   |
+| Max                              |         |  x     |           x       |
+| Min                              |         |  x     |           x       |
+| Mean                             |   x     |        |           x       |
 | Weighted mean                    |   x     |        |                   |
-| Geometric mean                   |         |  x     |                   |
-| Harmonic mean                    |         |  x     |                   |
+| Trimmed mean                     |         |        |           x       |
+| Geometric mean                   |         |  x     |           x       |
+| Harmonic mean                    |         |  x     |           x       |
 | Arithmetic mean                  |         |  x     |                   |
-| Median                           |   x     |  x     |                   |
-| Mode                             |   x     |        |                   |
-| Range                            |   x     |        |                   |
-| Variance                         |   x     |  x     |                   | 
+| Median                           |   x     |  x     |           x       |
+| Mode                             |   x     |        |           x       |
+| Range                            |   x     |        |           x       |
+| Interquartile Range              |         |        |           x       |
+| Variance                         |   x     |  x     |           x       | 
 | Population variance              |   x     |        |                   | 
-| Standard deviation               |   x     |  x     |                   |
+| Standard deviation               |   x     |  x     |           x       |
 | Population standard deviation    |   x     |        |                   |
-| Moment                           |   x     |        |                   |
-| Kurtosis                         |   x     |  x     |                   |
-| Skewness                         |   x     |  x     |                   |
-| Quantile                         |   x     |        |                   |
-| Percentile                       |   x     |  x     |                   |
+| Moment                           |   x     |        |          x        |
+| Kurtosis                         |   x     |  x     |          x        |
+| Skewness                         |   x     |  x     |          x        |
+| Quantile                         |   x     |        |          x        |
+| Percentile                       |   x     |  x     |          x        |
+| Histogram                        |         |        |          x        |
+| z score                          |         |        |          x        |
 | **Bivariate statistics**         |         |        |                   |
-| Covariance                       |   x     |        |                   |
+| Covariance                       |   x     |        |          x        |
 | Weighted covariance              |   x     |        |                   |
 | Population covariance            |   x     |        |                   |
 | Mean squared error (MSE)         |   x     |        |                   |
 | Root mean square error (RMSE)    |   x     |        |                   |
 | Peasron                          |   x     |        |                   |
 | Weighted Pearson                 |   x     |        |                   |
-| Pearson correlation              |         |  x     |                   |
+| Pearson correlation              |         |  x     |          x        |
 | Spearman correlation             |         |  x     |                   |
 | Kendall correlation              |         |  x     |                   |
 | **Regressions**                  |         |        |                   |
@@ -40,58 +43,24 @@
 | Logarithmic                      |         |        |                   |
 | Expomemtial                      |         |        |                   |
 | **Math**                         |         |        |                   |
-| nth root                         |   x     |        |                   |
-| logistic/sigmoid                 |   x     |        |                   |
-| logit                            |   x     |        |                   |
-|                                  |         |        |                   |
-|                                  |         |        |                   |
-|                                  |         |        |                   |
-
-
-# Elixir statistics ( https://github.com/msharp/elixir-statistics )
-
-## Math
-    gamma/gamma_lanczos
-    beta
-    erf
-    inv_erf
-    lower incomplete gamma
-    simpson integration
-
-## univariate
-    mean
-    median
-    mode
-    histogram
-    min
-    max
-    quartile/percentile
-    range of data
-    inter-quartile range
-    variance
-    stdev
-    trimmed mean
-    harmonic mean
-    geometric mean
-    moment
-    skew
-    kurtosis
-    zscore
-    
-## bivariance
-    pearson correlation
-    covariance
-
-## distribution (pdf, cdf, ppf/percent-point function,random sample )
-    beta
-    binomial/bernoulli
-    chi square
-    exponential
-    f
-    hypergeometric (notice, pmf and not pdf)
-    normal
-    poisson (notice, pmf and not pdf)
-    t
-
-## tests
-    t
+| nth root                         |   x     |        |  x                |
+| logistic/sigmoid                 |   x     |        |  x                |
+| logit                            |   x     |        |  x                |
+| gamma/gamma_lanczos              |         |        |  x                |
+| beta                             |         |        |  x                |
+| erf                              |         |        |  x                |
+| inverse erf                      |         |        |  x                |
+| lower incomplete gamma           |         |        |  x                |
+| simpson integration              |         |        |  x                |
+| **Distribution** (pdf, cdf, ppf/percent-point function,random sample )                 |         |        |                   |
+| beta                             |         |        |    x              |
+| binomial/bernoulli               |         |        |    x              |
+| chi square                       |         |        |    x              |
+| exponential                      |         |        |    x              |
+| f                                |         |        |    x              |
+| hpyergeometic (pmf, not pdf)     |         |        |    x              |
+| normal                           |         |        |    x              |
+| poisson (pmf, not pdf)           |         |        |    x              |
+| t                                |         |        |    x              |
+| **Tests**                        |         |        |                   |
+| student's t test                 |         |        |    x              |
