@@ -41,7 +41,7 @@
 | Linear                           |   x     |        |                   |
 | Polynomial                       |         |        |                   |
 | Logarithmic                      |         |        |                   |
-| Expomemtial                      |         |        |                   |
+| Exponemtial                      |         |        |                   |
 | **Math**                         |         |        |                   |
 | nth root                         |   x     |        |  x                |
 | logistic/sigmoid                 |   x     |        |  x                |
