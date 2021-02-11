@@ -1,101 +1,52 @@
-# Numerix ( https://github.com/safwank/Numerix )
+# Options
 
-## Statistics
+|                                  | Numerix | Bear   | Elixir Statistics |
+|----------------------------------|---------|--------|-------------------|
+| **Univariate statistics**        |         |        |                   |
+|                                  |         |        |                   |
+| Max                              |         |  x     |                   |
+| Min                              |         |  x     |                   |
+| Mean                             |   x     |        |                   |
+| Weighted mean                    |   x     |        |                   |
+| Geometric mean                   |         |  x     |                   |
+| Harmonic mean                    |         |  x     |                   |
+| Arithmetic mean                  |         |  x     |                   |
+| Median                           |   x     |  x     |                   |
+| Mode                             |   x     |        |                   |
+| Range                            |   x     |        |                   |
+| Variance                         |   x     |  x     |                   | 
+| Population variance              |   x     |        |                   | 
+| Standard deviation               |   x     |  x     |                   |
+| Population standard deviation    |   x     |        |                   |
+| Moment                           |   x     |        |                   |
+| Kurtosis                         |   x     |  x     |                   |
+| Skewness                         |   x     |  x     |                   |
+| Quantile                         |   x     |        |                   |
+| Percentile                       |   x     |  x     |                   |
+| **Bivariate statistics**         |         |        |                   |
+| Covariance                       |   x     |        |                   |
+| Weighted covariance              |   x     |        |                   |
+| Population covariance            |   x     |        |                   |
+| Mean squared error (MSE)         |   x     |        |                   |
+| Root mean square error (RMSE)    |   x     |        |                   |
+| Peasron                          |   x     |        |                   |
+| Weighted Pearson                 |   x     |        |                   |
+| Pearson correlation              |         |  x     |                   |
+| Spearman correlation             |         |  x     |                   |
+| Kendall correlation              |         |  x     |                   |
+| **Regressions**                  |         |        |                   |
+| Linear                           |   x     |        |                   |
+| Polynomial                       |         |        |                   |
+| Logarithmic                      |         |        |                   |
+| Expomemtial                      |         |        |                   |
+| **Math**                         |         |        |                   |
+| nth root                         |   x     |        |                   |
+| logistic/sigmoid                 |   x     |        |                   |
+| logit                            |   x     |        |                   |
+|                                  |         |        |                   |
+|                                  |         |        |                   |
+|                                  |         |        |                   |
 
-    Mean
-    Weighted mean
-    Median
-    Mode
-    Range
-    Variance
-    Population variance
-    Standard deviation
-    Population standard deviation
-    Moment
-    Kurtosis
-    Skewness
-    Covariance
-    Weighted covariance
-    Population covariance
-    Quantile
-    Percentile
-
-## Correlation functions
-
-    Pearson
-    Weighted Pearson
-
-## Distance functions
-
-    Mean squared error (MSE)
-    Root mean square error (RMSE)
-    Pearson
-    Minkowski
-    Euclidean
-    Manhattan
-    Jaccard
-
-## General math functions
-
-    nth root
-
-## Special functions
-
-    Logit
-    Logistic
-
-## Window functions
-
-    Gaussian
-
-## Linear algebra
-
-    Dot product
-    L1-norm
-    L2-norm
-    p-norm
-    Vector subtraction and multiplication
-
-## Linear regression
-
-    Least squares best fit
-    Prediction
-    R-squared
-
-## Kernel functions
-
-    RBF
-
-## Optimization
-
-    Genetic algorithms
-
-## Neural network activation functions
-
-    softmax
-    softplus
-    softsign
-    sigmoid
-    ReLU, leaky ReLU, ELU and SELU
-    tanh
-
-# Bear ( https://github.com/folsom-project/bear )
-
-## univariate
-    min
-    max
-    arithmetic mean
-    geometric mean
-    harmonic mean
-    median
-    variance
-    std. dev.
-    skewness
-    kurtosis
-    percentile
-    kendall correlation
-    pearson correlation
-    spearman correlation    
 
 # Elixir statistics ( https://github.com/msharp/elixir-statistics )
 
