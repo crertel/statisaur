@@ -1,6 +1,6 @@
 # Options
 
-|                                  | Numerix | Bear   | Elixir Statistics |
+|                                  | [Numerix](https://github.com/safwank/Numerix) | [Bear](https://github.com/folsom-project/bear)   | [Elixir Statistics](https://github.com/msharp/elixir-statistics) |
 |----------------------------------|---------|--------|-------------------|
 | **Univariate statistics**        |         |        |                   |
 |                                  |         |        |                   |
