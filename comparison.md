@@ -38,6 +38,7 @@
 | Spearman correlation             |         |  x     |                   |
 | Kendall correlation              |         |  x     |                   |
 | **Regressions**                  |         |        |                   |
+| R2 fitness                       |   x     |        |                   |
 | Linear                           |   x     |        |                   |
 | Polynomial                       |         |        |                   |
 | Logarithmic                      |         |        |                   |
