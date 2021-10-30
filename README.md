@@ -85,5 +85,7 @@ If you can't use *that*, fine--use the new BSD license.
 Contributors
 =============
 * Chris Ertel
+* Amanda Shih
+* Geoff Smith
 * Neeraj Tandon
 
