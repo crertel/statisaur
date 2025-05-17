@@ -64,6 +64,17 @@ Contributing
 
 6. Bask in the glory of having helped create content on one of the best platforms ever devised.
 
+### Local development with Nix
+
+If you have [Nix](https://nixos.org/) and flakes enabled, you can enter a shell
+with all required dependencies via:
+
+```shell
+nix develop
+```
+
+This provides Elixir, Erlang and tooling for running the project locally.
+
 ### For non-developers
 
 1. Buy us a beer if you see me at ElixirConf.
