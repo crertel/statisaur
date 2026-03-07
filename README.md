@@ -1,7 +1,7 @@
 # statisaur
 Elixir library for doing univariate statistics and certain analyses.
 
-[![CircleCI](https://circleci.com/gh/crertel/statisaur/tree/master.svg?style=svg)](https://circleci.com/gh/crertel/statisaur/tree/master)
+[![CI](https://github.com/crertel/statisaur/actions/workflows/ci.yml/badge.svg)](https://github.com/crertel/statisaur/actions/workflows/ci.yml)
 [![hex.pm version](https://img.shields.io/hexpm/v/statisaur.svg)](https://hex.pm/packages/statisaur)
 [![hex.pm downloads](https://img.shields.io/hexpm/dt/statisaur.svg)](https://hex.pm/packages/statisaur)
 [![Coverage Status](https://coveralls.io/repos/github/crertel/statisaur/badge.svg?branch=master)](https://coveralls.io/github/crertel/statisaur?branch=master)
@@ -74,6 +74,12 @@ nix develop
 ```
 
 This provides Elixir, Erlang and tooling for running the project locally.
+
+To run the same checks as CI:
+
+```shell
+nix run .#ci
+```
 
 ### For non-developers
 

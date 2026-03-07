@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v15
+
+      - name: Enable Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Run formatting and tests in dev shell
+        run: nix develop --command nix run .#ci
