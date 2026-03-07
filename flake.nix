@@ -6,7 +6,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -23,9 +23,10 @@
 
         formatter = pkgs.nixpkgs-fmt;
 
-        apps.ci = {
-          type = "app";
-          program = pkgs.writeShellScript "statisaur-ci" ''
+        packages.ci = pkgs.writeShellApplication {
+          name = "statisaur-ci";
+          runtimeInputs = beamTools;
+          text = ''
             set -euo pipefail
             mix local.hex --force
             mix deps.get
@@ -33,5 +34,12 @@
             mix test
           '';
         };
+
+        apps.ci = {
+          type = "app";
+          program = pkgs.lib.getExe self.packages.${system}.ci;
+        };
+
+        apps.default = self.apps.${system}.ci;
       });
 }
